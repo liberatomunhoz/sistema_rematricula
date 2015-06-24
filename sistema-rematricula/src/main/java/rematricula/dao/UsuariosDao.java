@@ -20,13 +20,13 @@ public class UsuariosDao {
 	private JdbcTemplate jdbcTemplate;
 
 	public Usuarios validaLogin(String loginUsuario, String senhaUsuario) {
-		List<Usuarios> usuarioExistente = jdbcTemplate.query("select login, senha, admin_sist, cod_usuario from usuarios where login = ? and senha = ?", new RowMapper<Usuarios>() {
+		List<Usuarios> usuarioExistente = jdbcTemplate.query("select login, senha, tipo, cod_usuario from usuarios where login = ? and senha = ?", new RowMapper<Usuarios>() {
 							@Override
 							public Usuarios mapRow(ResultSet rs, int arg1) throws SQLException {
 								Usuarios usuario = new Usuarios();
 								usuario.setLoginUsuario(rs.getString("login"));
 								usuario.setSenhaUsuario(rs.getString("senha"));
-								usuario.setAdminSistema(rs.getInt("admin_sist"));
+								usuario.setTipoUsuario(rs.getInt("tipo"));
 								usuario.setCodigoUsuario(rs.getInt("cod_usuario"));
 								return usuario;
 							}

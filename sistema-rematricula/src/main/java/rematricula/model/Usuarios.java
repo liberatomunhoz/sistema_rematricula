@@ -6,7 +6,7 @@ public class Usuarios {
 	private String nomeUsuario;
 	private String loginUsuario;
 	private String senhaUsuario;
-	private int adminSistema;
+	private int tipoUsuario;
 
 	public Usuarios() {
 
@@ -50,12 +50,12 @@ public class Usuarios {
 		this.senhaUsuario = senhaUsuario;
 	}
 
-	public int getAdminSistema() {
-		return adminSistema;
+	public int getTipoUsuario() {
+		return tipoUsuario;
 	}
 
-	public void setAdminSistema(int adminSistema) {
-		this.adminSistema = adminSistema;
+	public void setTipoUsuario(int tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
 
 }

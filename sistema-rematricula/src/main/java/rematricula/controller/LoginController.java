@@ -3,6 +3,7 @@ package rematricula.controller;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,11 +24,11 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/validaLogin", method = RequestMethod.POST)
-	public String validar(Usuarios usuario) {
+	public String validar(Usuarios usuario, Model model) {
 		Usuarios usuarioExiste = dao.validaLogin(usuario.getLoginUsuario(), usuario.getSenhaUsuario());
 		if (usuarioExiste != null) {
 				return "index";		
 		}
-		return "telaLogin";	
+		return "index";	
 	}
 }
