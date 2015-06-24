@@ -42,11 +42,8 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<dependency>
-			 <groupId>com.oracle</groupId>
-			 <artifactId>ojdbc6</artifactId>
-			 <version>11.2.0</version>
-			 <scope>system</scope>
-  			<systemPath>${basedir}/lib/ojdbc6.jar</systemPath>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
