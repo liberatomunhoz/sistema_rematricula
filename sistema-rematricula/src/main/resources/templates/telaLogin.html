@@ -1,34 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rematricula|Login</title>
-<link rel="stylesheet" href="../css/estiloLogin.css">
-{{> script}}
-</head>
-<body>
-	<div class="container">
-		<div class="row">
-		<div class="col-xs-3 col-md-4"></div>
-		<div class="col-xs-6 col-md-4">
-			<div class="panel panel-default">
-			    <div class="panel-heading">
-			     	<form class="form-signin" action="/validaLogin" method="post">
-			        	<h2 class="form-signin-heading">Login</h2>
-				        <input type="text" class="form-control" name="loginUsuario" placeholder="Usuário" required autofocus>
-				        <input type="password" class="form-control" name="senhaUsuario" placeholder="Senha" required>
-			        	<button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-			        	<div>
-			        	</br>
-			            <a href="">Cadastre-se</a> 
-			          </div>
-			      	</form>
-		    	</div>
-		    </div>
+<html class="no-js" lang="pt-br">
+	<head>
+	    <meta charset="utf-8" />
+	    <title>login | Liberato</title>
+		{{>scriptHead}}   
+	</head>
+	<body>
+		<div class="row paineladm">
+			<div class="row">
+				<div class="small-5 columns small-centered">
+					<form action="/validaLogin" method="post" class="custom loginform">
+						<fieldset>
+							<legend>Identifique-se</legend>
+							<label>Usuário</label>
+							<input type="text" name="loginUsuario" value="" autofocus required/>
+							<label>Senha</label>
+							<input type="password" name="senhaUsuario" value=""  required/>
+							<input type="submit" name="logar" value="Login" class="button radius right"  />
+							<p>
+								<a href="">Esqueci minha senha</a>
+							</p>
+						</fieldset>
+					</form>
+				</div>	
+			</div>		
 		</div>
-		<div class="col-xs-3 col-md-4"></div>
-		</div>
-	</div>
-</body>
+	  	<div class="row rodape">
+	  		<div class="twelve columns text-center">			
+	  		</div>
+	  	</div>
+	  </body>
 </html>
