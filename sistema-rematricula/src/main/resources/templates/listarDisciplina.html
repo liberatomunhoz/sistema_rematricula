@@ -1,0 +1,37 @@
+{{>cabecalho}}
+{{>menuAdmin}}
+<div class="row paineladm">
+    <div class="small-8 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Curso</th>
+                        <th>Nome da Disciplina</th>
+                        <th>Pré-Requisito</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#disciplinas}}
+                    <tr>
+                        <td>{{nomeCurso}}</td>
+                        <td>{{nomeDisciplina}}</td>
+                        <td>{{preRequisito}}</td>
+                        <td class="text-center">
+                            <a href="">
+                                <img src="../img/icon_edit.png" alt="Editar">
+                            </a>
+                            <a href="">
+                                <img src="../img/icon_delete.png" alt="Deletar">
+                            </a>
+                        </td>
+                    </tr>
+                    {{/disciplinas}} 
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{>rodape}}
+        
