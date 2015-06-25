@@ -1,38 +1,17 @@
 package rematricula.model;
 
-public class Usuarios {
+public class Usuarios extends Entidade {
 
-	private int codigoUsuario;
-	private String nomeUsuario;
 	private String loginUsuario;
 	private String senhaUsuario;
-	private int tipoUsuario;
+	private NivelUsuario nivelUsuario;
 
 	public Usuarios() {
 
 	}
 
 	 public Usuarios(String loginUsuario, String senhaUsuario){
-	 this.loginUsuario = loginUsuario;
-	 this.senhaUsuario = senhaUsuario;
-
 	 }
-
-	public int getCodigoUsuario() {
-		return codigoUsuario;
-	}
-
-	public void setCodigoUsuario(int codigoUsuario) {
-		this.codigoUsuario = codigoUsuario;
-	}
-
-	public String getNomeUsuario() {
-		return nomeUsuario;
-	}
-
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
-	}
 
 	public String getLoginUsuario() {
 		return loginUsuario;
@@ -50,12 +29,12 @@ public class Usuarios {
 		this.senhaUsuario = senhaUsuario;
 	}
 
-	public int getTipoUsuario() {
-		return tipoUsuario;
+	public NivelUsuario getNivelUsuario() {
+		return nivelUsuario;
 	}
 
-	public void setTipoUsuario(int tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
+	public void setNivelUsuario(NivelUsuario nivelUsuario) {
+		this.nivelUsuario = nivelUsuario;
+	}	
 
 }
