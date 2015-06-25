@@ -2,26 +2,28 @@
 {{>menuAdmin}}
 <div class="row paineladm">
     <div class="small-5 columns small-centered">
-        <div class="twelve columns ">
+        <div class="twelve columns">
             <table class="twelve data-table">
                 <thead>
                     <tr>
                         <th>Nome do Curso</th>
-                        <th class="text-center">Ações</th>
+                        <th class="text-center">AÃ§Ã£o</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {{#cursos}}
                     <tr>
-                        <td>Técnico em informática para Internet</td>
+                        <td>{{nomeCurso}}</td>
                         <td class="text-center">
-                            <a href="" class="table-actions table-edit" title="Editar">
+                            <a href="">
+                                <img src="../img/icon_edit.png" alt="Editar">
                             </a>
-                            <a href="" class="table-actions table-pass" title="Alterar Senha">
-                            </a>
-                            <a href="" class="table-actions table-delete deletareg" title="Excluir">
+                            <a href="">
+                                <img src="../img/icon_delete.png" alt="Deletar">
                             </a>
                         </td>
-                    </tr> 
+                    </tr>
+                    {{/cursos}} 
                </tbody>
             </table>
         </div>

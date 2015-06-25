@@ -2,15 +2,23 @@
 {{>menuAdmin}}
 <div class="row paineladm">
 	<div class="small-5 columns small-centered">
-		<form action="" method="post" class="custom">
+		<form action="/inserir-disciplina" method="post" class="custom">
 			<fieldset>
-				<legend>Cadastrar nova disciplina</legend>
+				<legend>Cadastrar nova disciplina(s)</legend>
+				<label>Curso</label>
+		        <select name="codCurso" autofocus required>
+		        {{#cursos}}
+		          	<option value="{{codigo}}">{{nomeCurso}}</option>
+		        {{/cursos}}
+		        </select>
 				<label>Nome da Disciplina</label>
-				<input type="text" name="nome_disc" value="" class="five" autofocus />
-				<label>Código do Curso</label>
-				<input type="text" name="cod_curso" value="" class="five" autofocus />
+				<input type="text" name="nomeDisciplina" value="" class="five" required />
 				<label>Pré-Requisito(s)</label>
-				<input type="text" name="disc_pre" value="" class="five" autofocus />
+	            <select name="preRequisito">
+	            {{#prerequisito}}
+	                <option value="{{codigo}}">{{nomeDisciplina}}</option>
+	            {{/prerequisito}}
+	            </select>
 				<a href="" class="button radius alert espaco">
 					Cancelar
 				</a>

@@ -2,13 +2,13 @@
 {{>menuAdmin}}
 <div class="row paineladm">
 	<div class="small-5 columns small-centered">
-		<form action="" method="post" class="custom">
+		<form action="/inserir-curso" method="post" class="custom">
 			<fieldset>
 				<legend>Cadastrar novo curso</legend>
 				<label>Nome do Curso</label>
-				<input type="text" name="nome_curso" value="" class="five" autofocus />
+				<input type="text" name="nomeCurso" class="five" autofocus required />
 				<a href="" class="button radius alert espaco">Cancelar</a>
-				<input type="submit" name="cadastrar" value="Salvar Dados" class="button radius"  />
+				<input type="submit" value="Salvar Dados" class="button radius"  />
 			</fieldset>
 		</form>
 	</div>
