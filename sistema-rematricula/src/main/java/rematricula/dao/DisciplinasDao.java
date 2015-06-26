@@ -26,7 +26,7 @@ public class DisciplinasDao {
 			+ " FROM disciplinas AS d"
 			+ " INNER JOIN cursos AS c ON c.cod_curso = d.curso_cod"
 			+ " WHERE c.cod_curso = ?";
-	
+	private static final String COMANDO_SQL_DELETE_DISCIPLINAS = " DELETE FROM disciplinas WHERE cod_disc = ?";
 	
 	public void inserirDisciplinas(Disciplinas disciplina) {
 		jdbcTemplate.update(
@@ -62,6 +62,10 @@ public class DisciplinasDao {
 								return disciplina;
 							}
 						});
+	
+	public void deletaDisciplina(int disciplina) {
+		jdbcTemplate.update(COMANDO_SQL_DELETE_DISCIPLINAS,
+				disciplina);
 	}
 
 }

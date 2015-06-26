@@ -66,6 +66,14 @@ public class AdministradorController {
 		return "listarDisciplina";
 	}
 	
+	
+	@RequestMapping(value = "/deletar-disciplina", method = RequestMethod.GET)
+	public String deletarDisciplina(Model model, Disciplinas disciplina) {
+		disciplinaDao.deletaDisciplina(disciplina.getCodigo());
+		model.addAttribute("disciplinas", disciplinaDao.consultaDisciplinas());
+		return "listarDisciplina";
+	}
+	
 	//CRUD PROFESSOR
 	@RequestMapping(value = "/cadastrar/professor", method = RequestMethod.GET)
 	public String cadastroDeProfessor() {
