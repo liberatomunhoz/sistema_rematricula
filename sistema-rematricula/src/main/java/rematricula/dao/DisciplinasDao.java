@@ -18,11 +18,11 @@ public class DisciplinasDao {
 	@Inject
 	private JdbcTemplate jdbcTemplate;
 	
-	private final String COMANDO_SQL_INSERT_DISCIPLINAS = "INSERT INTO disciplinas (curso_cod, nome_disc, disc_pre) VALUES (?, ?, ?)";
-	private final String COMANDO_SQL_SELECT_DISCIPLINAS = "SELECT d.cod_disc, c.nome_curso, d.nome_disc, d.disc_pre"
+	private static final String COMANDO_SQL_INSERT_DISCIPLINAS = "INSERT INTO disciplinas (curso_cod, nome_disc, disc_pre) VALUES (?, ?, ?)";
+	private static final String COMANDO_SQL_SELECT_DISCIPLINAS = "SELECT d.cod_disc, c.nome_curso, d.nome_disc, d.disc_pre"
 	+ " FROM disciplinas AS d"
 	+ " INNER JOIN cursos AS c ON c.cod_curso = d.curso_cod";
-	private final String COMANDO_SQL_SELECT_PREREQUISITO = "SELECT d.cod_disc, d.nome_disc"
+	private static final String COMANDO_SQL_SELECT_PREREQUISITO = "SELECT d.cod_disc, d.nome_disc"
 			+ " FROM disciplinas AS d"
 			+ " INNER JOIN cursos AS c ON c.cod_curso = d.curso_cod"
 			+ " WHERE c.cod_curso = ?";

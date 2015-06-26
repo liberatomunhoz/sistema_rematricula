@@ -19,8 +19,8 @@ public class CursosDao {
 	@Inject
 	private JdbcTemplate jdbcTemplate;
 	
-	private final String COMANDO_SQL_INSERT_CURSOS = "INSERT INTO cursos (nome_curso) VALUES (?)";
-	private final String COMANDO_SQL_SELECT_CURSOS = "SELECT cod_curso, nome_curso FROM cursos";
+	private static final String COMANDO_SQL_INSERT_CURSOS = "INSERT INTO cursos (nome_curso) VALUES (?)";
+	private static final String COMANDO_SQL_SELECT_CURSOS = "SELECT cod_curso, nome_curso FROM cursos";
 	private static final String COMANDO_SQL_DELETE_CURSOS = " DELETE FROM cursos WHERE cod_curso = ?";
 	
 	public void inserirCurso(Cursos curso) {
