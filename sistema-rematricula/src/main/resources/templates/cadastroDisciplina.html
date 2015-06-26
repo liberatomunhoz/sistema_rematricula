@@ -6,7 +6,8 @@
 			<fieldset>
 				<legend>Cadastrar nova disciplina(s)</legend>
 				<label>Curso</label>
-		        <select name="codCurso" autofocus required>
+		        <select name="codCurso" onchange="trocaPreRequisito(this.value)" autofocus required>
+		        	<option selected disabled>Selecione um Curso</option>
 		        {{#cursos}}
 		          	<option value="{{codigo}}">{{nomeCurso}}</option>
 		        {{/cursos}}
@@ -14,11 +15,9 @@
 				<label>Nome da Disciplina</label>
 				<input type="text" name="nomeDisciplina" value="" class="five" required />
 				<label>Pré-Requisito(s)</label>
-	            <select name="preRequisito">
-	            {{#prerequisito}}
-	                <option value="{{codigo}}">{{nomeDisciplina}}</option>
-	            {{/prerequisito}}
-	            </select>
+				<select id="preRequisito" name="preRequisito">
+					<option value="">Nenhum Pré-Requisito</option>
+				</select>
 				<a href="" class="button radius alert espaco">
 					Cancelar
 				</a>
@@ -27,5 +26,21 @@
 		</form>
 	</div>
 </div>
+<script>
+function trocaPreRequisito(val) {
+    $.ajax({
+		url: '/listar/pre-requisito?codigoCurso=' + val,
+		type: 'POST'
+	}).done(function(data) {					
+		var template = '<option value="${codigo}">${nomeDisciplina}</option>';
+		$('#preRequisito').empty();
+			for(var i = 0; i < data.length; i++) {   
+				var html = template.replace('${codigo}', data[i].codigo)
+								   .replace('${nomeDisciplina}', data[i].nomeDisciplina);
+			$('#preRequisito').append(html);
+			}
+	});
+}
+</script>
 {{>rodape}}
 		

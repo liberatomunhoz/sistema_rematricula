@@ -1,11 +1,15 @@
 package rematricula.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import rematricula.dao.CursosDao;
 import rematricula.dao.DisciplinasDao;
@@ -50,7 +54,6 @@ public class AdministradorController {
 	@RequestMapping(value = "/cadastrar/disciplina", method = RequestMethod.GET)
 	public String cadastroDeDisciplina(Model model) {
 		model.addAttribute("cursos", cursosDao.consultaCursos());
-		model.addAttribute("prerequisito", disciplinaDao.consultaPreRequisito());
 		return "cadastroDisciplina";
 	}
 	
@@ -66,6 +69,11 @@ public class AdministradorController {
 		return "listarDisciplina";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/listar/pre-requisito", method = RequestMethod.POST)
+	public List<Disciplinas> listarPreRequisito(Model model,  @RequestParam int codigoCurso) {
+		return disciplinaDao.consultaPreRequisito(codigoCurso);
+	}
 	
 	@RequestMapping(value = "/deletar-disciplina", method = RequestMethod.GET)
 	public String deletarDisciplina(Model model, Disciplinas disciplina) {
