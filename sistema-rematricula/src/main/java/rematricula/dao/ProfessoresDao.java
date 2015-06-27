@@ -19,7 +19,7 @@ public class ProfessoresDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	private static final String COMANDO_SQL_INSERT_PROFESSORES = "INSERT INTO professores (nome_completo, cpf, data_nasc, email, cidade_cod, cod_usuario) VALUES (?, ?, ?, ?, ?, ?)";
-	private static final String COMANDO_SQL_SELECT_PROFESSORES = "SELECT p.cod_professor, p.nome_completo, p.data_nasc, p.email, p.cpf, u.login, u.senha, c.nome_cidade"
+	private static final String COMANDO_SQL_SELECT_PROFESSORES = "SELECT p.cod_professor, p.nome_completo, p.data_nasc, p.email, p.cpf, u.login, u.senha, c.nome_cidade, p.cod_usuario"
 																+ " FROM professores AS p"
 																+ " INNER JOIN cidades AS c ON c.cod_cidade = p.cidade_cod"
 																+ " INNER JOIN usuarios AS u ON p.cod_usuario = u.cod_usuario";
@@ -50,6 +50,7 @@ public class ProfessoresDao {
 								professor.setLoginUsuario(rs.getString("u.login"));
 								professor.setSenhaUsuario(rs.getString("u.senha"));
 								professor.setNomeCidade(rs.getString("c.nome_cidade"));
+								professor.setCodigoLoginProfessor(rs.getInt("p.cod_usuario"));
 								return professor;
 							}
 						});

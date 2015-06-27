@@ -126,11 +126,21 @@ public class AdministradorController {
 		return "listarProfessor";
 	}
 	
+	@RequestMapping(value = "/deletar-professor", method = RequestMethod.GET)
+	public String deletarProfessor(Model model, Professores professor) {
+		professorDao.deletaProfessor(professor.getCodigo());
+		usuarioDao.deletaLoginProfessor(professor.getCodigoLoginProfessor());
+		model.addAttribute("professores", professorDao.consultaProfessores());
+		return "listarProfessor";
+	}
+	
+	//CRUD ALUNO
 	@RequestMapping(value = "/cadastrar/aluno", method = RequestMethod.GET)
 	public String cadastroDeAluno() {
 		return "cadastroAluno";
 	}
 	
+	//CRUD TURMA
 	@RequestMapping(value = "/cadastrar/turma", method = RequestMethod.GET)
 	public String cadastroDeTurma() {
 		return "cadastroTurma";
