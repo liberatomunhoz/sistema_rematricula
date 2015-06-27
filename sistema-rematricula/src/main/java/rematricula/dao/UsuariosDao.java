@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import rematricula.model.NivelUsuario;
+import rematricula.model.Professores;
 import rematricula.model.Usuarios;
 
 @Component
@@ -19,9 +20,9 @@ public class UsuariosDao {
 	@Inject
 	private JdbcTemplate jdbcTemplate;
 	
-	private final String COMANDO_SQL_VALIDA_LOGIN = "SELECT cod_usuario, login, senha, nivel_usuario FROM usuarios WHERE login = ? AND senha = ?";
-
 	private static final String COMANDO_SQL_VALIDA_LOGIN = "SELECT cod_usuario, login, senha, nivel_usuario FROM usuarios WHERE login = ? AND senha = ?";
+	private static final String COMANDO_SQL_INSERT_LOGIN_PROFESSOR = "INSERT INTO usuarios (login, senha, nivel_usuario) VALUES (?, ?, 'PROFESSOR')";
+	
 	public Usuarios validaLogin(String loginUsuario, String senhaUsuario) {
 		List<Usuarios> usuarioExistente = jdbcTemplate.query(COMANDO_SQL_VALIDA_LOGIN, new RowMapper<Usuarios>() {
 							@Override
@@ -37,5 +38,19 @@ public class UsuariosDao {
 						}, loginUsuario, senhaUsuario);
 		
 		return usuarioExistente.isEmpty() ? null : usuarioExistente.get(0);
-	}	
+	}
+	
+	public void inserirLoginProfessor(Professores usuarioProfessor) {
+		jdbcTemplate.update(
+				COMANDO_SQL_INSERT_LOGIN_PROFESSOR,
+				usuarioProfessor.getLoginUsuario(),
+				usuarioProfessor.getSenhaUsuario()
+				);
+		
+		Integer idLoginProfessorGerada = jdbcTemplate.queryForObject(
+				"SELECT LAST_INSERT_ID()", Integer.class);
+		usuarioProfessor.setCodigo(idLoginProfessorGerada);
+	}
+	
+	
 }

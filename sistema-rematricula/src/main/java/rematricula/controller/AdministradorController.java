@@ -15,11 +15,18 @@ import rematricula.dao.CidadesDao;
 import rematricula.dao.CursosDao;
 import rematricula.dao.DisciplinasDao;
 import rematricula.dao.EstadosDao;
+import rematricula.dao.ProfessoresDao;
+import rematricula.dao.UsuariosDao;
+import rematricula.model.Cidades;
 import rematricula.model.Cursos;
 import rematricula.model.Disciplinas;
+import rematricula.model.Professores;
 
 @Controller
 public class AdministradorController {
+	
+	@Inject
+	UsuariosDao usuarioDao;
 	
 	@Inject 
 	CursosDao cursosDao;
@@ -30,6 +37,11 @@ public class AdministradorController {
 	@Inject 
 	EstadosDao estadosDao;
 	
+	@Inject 
+	CidadesDao cidadesDao;
+	
+	@Inject
+	ProfessoresDao professorDao;
 
     //CRUD CURSO	
 	@RequestMapping(value = "/cadastrar/curso", method = RequestMethod.GET)
@@ -90,7 +102,8 @@ public class AdministradorController {
 	
 	//CRUD PROFESSOR
 	@RequestMapping(value = "/cadastrar/professor", method = RequestMethod.GET)
-	public String cadastroDeProfessor() {
+	public String cadastroDeProfessor(Model model) {
+		model.addAttribute("estados", estadosDao.consultaEstados());
 		return "cadastroProfessor";
 	}
 	
@@ -98,6 +111,13 @@ public class AdministradorController {
 	@RequestMapping(value = "/listar/cidade", method = RequestMethod.POST)
 	public List<Cidades> listarCidade(Model model,  @RequestParam int codigoEstado) {
 		return cidadesDao.consultaCidades(codigoEstado);
+	}
+	
+	@RequestMapping(value = "/inserir-professor", method = RequestMethod.POST)
+	public String inserirProfessor(Professores professor) {
+		usuarioDao.inserirLoginProfessor(professor);		
+		professorDao.inserirProfessor(professor);
+		return "redirect:/listar/professor";
 	}
 	
 	@RequestMapping(value = "/cadastrar/aluno", method = RequestMethod.GET)

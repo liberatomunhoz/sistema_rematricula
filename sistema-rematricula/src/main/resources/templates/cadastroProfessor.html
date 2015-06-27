@@ -1,17 +1,16 @@
 {{>cabecalho}}
 {{>menuAdmin}}
 <div class="small-5 columns small-centered">
-	<form action="" method="post" class="custom">
+	<form action="/inserir-professor" method="post" class="custom">
 		<fieldset>
 			<legend>Cadastrar novo professor(s)</legend>
 			<label>Nome Completo</label>
-			<input type="text" name="nome" value="" class="five" autofocus required />
+			<input type="text" name="nomeCompleto" class="five" autofocus required />
 			<label>CPF</label>
-			<input type="text" name="cpf" value="" class="five" required />
+			<input type="number" name="cpf" class="five" required />
 			<label>Data de Nascimento</label>
-			<input type="text" name="cpf" value="" class="five" required />
+			<input type="text" name="dataNascimento" class="five" required />
 			<label>Email</label>
-			<input type="text" name="email" value="" class="five" required />
 			<input type="text" name="email" class="five" required />
 			<label>Estado</label>
 			<select onchange="trocaEstado(this.value)" required>
@@ -24,15 +23,15 @@
 		    <select id="cidade" name="codigoCidade" required>
 		    </select>
 			<label>Login</label>
-			<input type="text" name="login" value="" class="five" required />
+			<input type="text" name="loginUsuario" class="five" required />
 			<label>Senha</label>
-			<input type="password" name="senha" value="" class="three" required />
-			<label>Repita a senha</label>
-			<input type="password" name="senha2" value="" class="three" required />
+			<input type="password" name="senhaUsuario" class="five" required />
+			 <label>Repita a senha</label>
+			<input type="password" name="confirma" class="five" required /> 
 			<a href="" class="button radius alert espaco">
 				Cancelar
 			</a>
-			<input type="submit" name="cadastrar" value="Salvar Dados" class="button radius"  />
+			<input type="submit" value="Salvar Dados" class="button radius" />
 		</fieldset>
 	</form>
 </div>
