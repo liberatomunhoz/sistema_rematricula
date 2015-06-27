@@ -12,6 +12,17 @@
 			<input type="text" name="cpf" value="" class="five" required />
 			<label>Email</label>
 			<input type="text" name="email" value="" class="five" required />
+			<input type="text" name="email" class="five" required />
+			<label>Estado</label>
+			<select onchange="trocaEstado(this.value)" required>
+		        <option selected disabled>Selecione um Estado</option>
+		        {{#estados}}
+		          	<option value="{{codigo}}">{{uf}}</option>
+		        {{/estados}}
+		    </select>
+		    <label>Cidade</label>
+		    <select id="cidade" name="codigoCidade" required>
+		    </select>
 			<label>Login</label>
 			<input type="text" name="login" value="" class="five" required />
 			<label>Senha</label>
@@ -25,4 +36,20 @@
 		</fieldset>
 	</form>
 </div>
+<script>
+	function trocaEstado(val) {
+	    $.ajax({
+			url: '/listar/cidade?codigoEstado=' + val,
+			type: 'POST'
+		}).done(function(data) {					
+			var template = '<option value="${codigo}">${nomeCidade}</option>';
+			$('#cidade').empty();
+				for(var i = 0; i < data.length; i++) {   
+					var html = template.replace('${codigo}', data[i].codigo)
+									   .replace('${nomeCidade}', data[i].nomeCidade);
+				$('#cidade').append(html);
+				}
+		});
+	}
+</script>
 {{>rodape}}

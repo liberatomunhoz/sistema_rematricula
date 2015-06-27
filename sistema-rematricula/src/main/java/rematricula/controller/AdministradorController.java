@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import rematricula.dao.CidadesDao;
 import rematricula.dao.CursosDao;
 import rematricula.dao.DisciplinasDao;
+import rematricula.dao.EstadosDao;
 import rematricula.model.Cursos;
 import rematricula.model.Disciplinas;
 
@@ -24,6 +26,10 @@ public class AdministradorController {
 	
 	@Inject 
 	DisciplinasDao disciplinaDao;
+	
+	@Inject 
+	EstadosDao estadosDao;
+	
 
     //CRUD CURSO	
 	@RequestMapping(value = "/cadastrar/curso", method = RequestMethod.GET)
@@ -86,6 +92,12 @@ public class AdministradorController {
 	@RequestMapping(value = "/cadastrar/professor", method = RequestMethod.GET)
 	public String cadastroDeProfessor() {
 		return "cadastroProfessor";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/listar/cidade", method = RequestMethod.POST)
+	public List<Cidades> listarCidade(Model model,  @RequestParam int codigoEstado) {
+		return cidadesDao.consultaCidades(codigoEstado);
 	}
 	
 	@RequestMapping(value = "/cadastrar/aluno", method = RequestMethod.GET)
