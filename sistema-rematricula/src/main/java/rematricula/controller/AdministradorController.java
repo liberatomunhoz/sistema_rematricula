@@ -120,6 +120,12 @@ public class AdministradorController {
 		return "redirect:/listar/professor";
 	}
 	
+	@RequestMapping(value = "/listar/professor", method = RequestMethod.GET)
+	public String listarProfessor(Model model) {
+		model.addAttribute("professores", professorDao.consultaProfessores());
+		return "listarProfessor";
+	}
+	
 	@RequestMapping(value = "/cadastrar/aluno", method = RequestMethod.GET)
 	public String cadastroDeAluno() {
 		return "cadastroAluno";

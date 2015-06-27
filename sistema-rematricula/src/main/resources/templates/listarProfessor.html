@@ -1,0 +1,45 @@
+{{>cabecalho}}
+{{>menuAdmin}}
+<div class="row paineladm">
+    <div class="small-8 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Professor</th>
+                        <th>Data de Nascimento</th>
+                        <th>E-mail</th>
+                        <th>CPF</th>
+                        <th>Login</th>
+                        <th>Senha</th>
+                        <th>Nome da Cidade</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#professores}}
+                    <tr>
+                        <td>{{nomeCompleto}}</td>
+                        <td>{{dataNascimento}}</td>
+                        <td>{{email}}</td>
+                        <td>{{cpf}}</td>
+                        <td>{{loginUsuario}}</td>
+                        <td>{{senhaUsuario}}</td>
+                        <td>{{nomeCidade}}</td>
+                        <td class="text-center">
+                            <!-- <a href="">
+                                <img src="../img/icon_edit.png" alt="Editar">
+                            </a> -->
+                            <a href="/deletar-professor?codigo={{codigo}}">
+                                <img src="../img/icon_delete.png" alt="Deletar">
+                            </a>
+                        </td>
+                    </tr>
+                    {{/professores}} 
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{>rodape}}
+        
