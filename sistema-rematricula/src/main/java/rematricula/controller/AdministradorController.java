@@ -16,11 +16,15 @@ import rematricula.dao.CursosDao;
 import rematricula.dao.DisciplinasDao;
 import rematricula.dao.EstadosDao;
 import rematricula.dao.ProfessoresDao;
+import rematricula.dao.ProfessoresTurmasDao;
+import rematricula.dao.TurmasDao;
+import rematricula.dao.TurmasDisciplinasDao;
 import rematricula.dao.UsuariosDao;
 import rematricula.model.Cidades;
 import rematricula.model.Cursos;
 import rematricula.model.Disciplinas;
 import rematricula.model.Professores;
+import rematricula.model.Turmas;
 
 @Controller
 public class AdministradorController {
@@ -42,7 +46,16 @@ public class AdministradorController {
 	
 	@Inject
 	ProfessoresDao professorDao;
+	
+	@Inject
+	TurmasDao turmaDao;
 
+	@Inject
+	TurmasDisciplinasDao turmaDisciplinaDao;
+	
+	@Inject
+	ProfessoresTurmasDao professorTurmaDao;
+	
     //CRUD CURSO	
 	@RequestMapping(value = "/cadastrar/curso", method = RequestMethod.GET)
 	public String cadastroDeCurso() {
@@ -142,9 +155,32 @@ public class AdministradorController {
 	
 	//CRUD TURMA
 	@RequestMapping(value = "/cadastrar/turma", method = RequestMethod.GET)
-	public String cadastroDeTurma() {
+	public String cadastroDeTurma(Model model) {
+		model.addAttribute("disciplinas", disciplinaDao.consultaDisciplinas());
+		model.addAttribute("professores", professorDao.consultaProfessores());
 		return "cadastroTurma";
 	}
 	
+	@RequestMapping(value = "/inserir-turma", method = RequestMethod.POST)
+	public String inserirTurma(Turmas turma) {
+		turmaDao.inserirTurmas(turma);
+		turmaDisciplinaDao.inserirTurmasDisciplinas(turma);
+		professorTurmaDao.inserirProfessoresTurmas(turma);
+		return "redirect:/listar/turma";
+	}
 	
+	@RequestMapping(value = "/listar/turma", method = RequestMethod.GET)
+	public String listarProfessoresTurmas(Model model) {
+		model.addAttribute("turmas", turmaDao.consultaTurmas());
+		return "listarTurma";
+	}
+	
+	@RequestMapping(value = "/deletar-turma", method = RequestMethod.GET)
+	public String deletarProfessor(Model model, Turmas turma) {
+		professorTurmaDao.deletaProfessoresTurmas(turma.getCodigoProfessorTurma());
+		turmaDisciplinaDao.deletaTurmasDisciplinas(turma.getCodigoTurmaDisciplina());
+		turmaDao.deletaTurmas(turma.getCodigo());
+		model.addAttribute("turmas", turmaDao.consultaTurmas());
+		return "listarTurma";
+	}
 }

@@ -1,18 +1,22 @@
 {{>cabecalho}}
 {{>menuAdmin}}
 <div class="small-5 columns small-centered">
-	<form action="" method="post" accept-charset="utf-8" class="custom">
+	<form action="/inserir-turma" method="post" accept-charset="utf-8" class="custom">
 		<fieldset>
 			<legend>Cadastrar nova turma(s)</legend>
 			<label>Disciplina</label>
-		    <select autofocus required>
-		       	<option value=""></option>
+		    <select name="codigoDisciplina" autofocus required>
+		    	{{#disciplinas}}
+		       		<option value="{{codigo}}">{{nomeDisciplina}}</option>
+		       	{{/disciplinas}}
 		    </select>
 		    <label>Número da Turma</label>
-			<input type="text" name="turma" class="five" required />
+			<input type="text" name="numeroTurma" class="five" required />
 			<label>Professor</label>
-		    <select required>
-		        <option value=""></option>
+		    <select name="codigoProfessor" required>
+		    	{{#professores}}
+		        	<option value="{{codigo}}">{{nomeCompleto}}</option>
+		    	{{/professores}}
 		    </select>
 			<a href="" class="button radius alert espaco">
 				Cancelar

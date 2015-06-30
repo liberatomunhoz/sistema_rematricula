@@ -1,0 +1,37 @@
+{{>cabecalho}}
+{{>menuAdmin}}
+<div class="row paineladm">
+    <div class="small-8 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Professor</th>
+                        <th>Número da Turma</th>
+                        <th>Nome da Disciplina</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#turmas}}
+                    <tr>
+                        <td>{{nomeCompleto}}</td>
+                        <td>{{numeroTurma}}</td>
+                        <td>{{nomeDisciplina}}</td>
+                        <td class="text-center">
+                            <!-- <a href="">
+                                <img src="../img/icon_edit.png" alt="Editar">
+                            </a> -->
+                            <a href="/deletar-turma?codigo={{codigo}}&codigoProfessorTurma={{codigoProfessorTurma}}&codigoTurmaDisciplina={{codigoTurmaDisciplina}}">
+                                <img src="../img/icon_delete.png" alt="Deletar">
+                            </a>
+                        </td>
+                    </tr>
+                    {{/turmas}} 
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{>rodape}}
+        
