@@ -18,8 +18,8 @@ public class DisciplinasDao {
 	@Inject
 	private JdbcTemplate jdbcTemplate;
 	
-	private static final String COMANDO_SQL_INSERT_DISCIPLINAS = "INSERT INTO disciplinas (curso_cod, nome_disc, disc_pre) VALUES (?, ?, ?)";
-	private static final String COMANDO_SQL_SELECT_DISCIPLINAS = "SELECT d.cod_disc, c.nome_curso, d.nome_disc, d.disc_pre"
+	private static final String COMANDO_SQL_INSERT_DISCIPLINAS = "INSERT INTO disciplinas (curso_cod, nome_disc, disc_pre, semestre) VALUES (?, ?, ?, ?)";
+	private static final String COMANDO_SQL_SELECT_DISCIPLINAS = "SELECT d.cod_disc, c.nome_curso, d.nome_disc, d.semestre, d.disc_pre"
 	+ " FROM disciplinas AS d"
 	+ " INNER JOIN cursos AS c ON c.cod_curso = d.curso_cod";
 	private static final String COMANDO_SQL_SELECT_PREREQUISITO = "SELECT d.cod_disc, d.nome_disc"
@@ -33,7 +33,8 @@ public class DisciplinasDao {
 				COMANDO_SQL_INSERT_DISCIPLINAS,
 				disciplina.getCodCurso(),
 				disciplina.getNomeDisciplina(),
-				disciplina.getPreRequisito()
+				disciplina.getPreRequisito(),
+				disciplina.getSemestre()
 				);
 	}
 	
@@ -46,6 +47,7 @@ public class DisciplinasDao {
 								disciplina.setCodigo(rs.getInt("d.cod_disc"));
 								disciplina.setNomeCurso(rs.getString("c.nome_curso"));
 								disciplina.setNomeDisciplina(rs.getString("d.nome_disc"));
+								disciplina.setSemestre(rs.getInt("d.semestre"));
 								disciplina.setPreRequisito(rs.getInt("d.disc_pre"));
 								return disciplina;
 							}
