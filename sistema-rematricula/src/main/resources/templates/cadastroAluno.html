@@ -1,13 +1,9 @@
 {{>cabecalho}}
 {{>menuAdmin}}
 <div class="small-5 columns small-centered">
-	<form action="" method="post" accept-charset="utf-8" class="custom">
+	<form action="/inserir-aluno" method="post" accept-charset="utf-8" class="custom">
 		<fieldset>
 			<legend>Cadastrar novo aluno(a)</legend>
-			<label>Turma(s)</label>
-		        <select autofocus required>
-		          	<option value=""></option>
-		        </select>
 			<label>Nome Completo</label>
 			<input type="text" name="nomeCompleto" class="five" required />
 			<label>CPF</label>
@@ -20,10 +16,19 @@
 			<input type="text" name="nomeMaeAluno" class="five" required />
 			<label>Email</label>
 			<input type="text" name="email" class="five" required />
+			<select onchange="trocaEstado(this.value)" required>
+		        <option selected disabled>Selecione um Estado</option>
+		        {{#estados}}
+		          	<option value="{{codigo}}">{{uf}}</option>
+		        {{/estados}}
+		    </select>
+		    <label>Cidade</label>
+		    <select id="cidade" name="codigoCidade" required>
+		    </select>
 			<label>Matrícula</label>
-			<input type="text" name="matriculaAluno" class="five" required />
+			<input type="text" name="loginUsuario" class="five" required />
 			<label>Senha</label>
-			<input type="password" name="senha" class="five" required />
+			<input type="password" name="senhaUsuario" class="five" required />
 			<label>Repita a senha</label>
 			<input type="password" name="senha2" class="five" required />
 			<a href="" class="button radius alert espaco">
@@ -33,4 +38,20 @@
 		</fieldset>
 	</form>
 </div>
+<script>
+	function trocaEstado(val) {
+	    $.ajax({
+			url: '/listar/cidade?codigoEstado=' + val,
+			type: 'POST'
+		}).done(function(data) {					
+			var template = '<option value="${codigo}">${nomeCidade}</option>';
+			$('#cidade').empty();
+				for(var i = 0; i < data.length; i++) {   
+					var html = template.replace('${codigo}', data[i].codigo)
+									   .replace('${nomeCidade}', data[i].nomeCidade);
+				$('#cidade').append(html);
+				}
+		});
+	}
+</script>
 {{>rodape}}

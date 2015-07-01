@@ -1,0 +1,76 @@
+{{>cabecalho}}
+{{>menuAdmin}}
+<div class="row paineladm">
+    <div class="small-6 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nome do Aluno</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#alunos}}
+                    <tr>
+                        <td>{{nomeCompleto}}</td>
+                        <td>
+                            <a href="#" data-reveal-id="detalheModal" class="button radius tiny">
+                                Detalhes
+                            </a>   
+                            <a href="#" data-reveal-id="disciplinaModal" class="button radius tiny">
+                                Disciplinas   
+                            </a>
+                            <a href="">
+                                <img src="../img/icon_delete.png" alt="Deletar">
+                            </a>
+                        </td>
+                    </tr>
+                    {{/alunos}} 
+               </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="detalheModal" class="reveal-modal" data-reveal aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
+        <div class="row">
+            <div class="large-6 columns">
+                <h2 id="firstModalTitle">Detalhes do Aluno</h2>
+                <label><strong>Nome Completo</strong></label>
+                <p></p>
+                <label><strong>Data de Nascimento</strong></label>
+                <p></p>
+                <label><strong>E-mail</strong></label>
+                <p></p>
+                <label><strong>CPF</strong></label>
+                <p></p>
+                <label><strong>Nome do Pai</strong></label>
+                <p></p>
+                <label><strong>Nome da Mãe</strong></label>
+                <p></p>
+                <label><strong>Cidade</strong></label>
+                <p></p>
+                <label><strong>Matrícula</strong></label>
+                <p></p>
+                <label><strong>Senha</strong></label>
+                <p></p>
+            </div>
+            <div class="large-6 columns">
+                <h2 id="firstModalTitle">Disciplinas Iniciais</h2>
+                <p></p>
+            </div>
+        </div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+    <div id="disciplinaModal" class="reveal-modal" data-reveal aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
+        <h2 id="firstModalTitle">Disciplinas Iniciais</h2>
+        <div class="four columns">
+            <label for="checkbox3">
+                <input type="checkbox" id="checkbox3"> Disciplinas aqui
+            </label>
+            <a href="#" class="button radius tiny">Cadastrar</a>
+        </div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+</div>
+{{>rodape}}
+        

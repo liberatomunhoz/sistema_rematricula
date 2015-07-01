@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import rematricula.model.Alunos;
 import rematricula.model.NivelUsuario;
 import rematricula.model.Professores;
 import rematricula.model.Usuarios;
@@ -22,7 +23,8 @@ public class UsuariosDao {
 	
 	private static final String COMANDO_SQL_VALIDA_LOGIN = "SELECT cod_usuario, login, senha, nivel_usuario FROM usuarios WHERE login = ? AND senha = ?";
 	private static final String COMANDO_SQL_INSERT_LOGIN_PROFESSOR = "INSERT INTO usuarios (login, senha, nivel_usuario) VALUES (?, ?, 'PROFESSOR')";
-	private static final String COMANDO_SQL_DELETE_LOGIN_PROFESSOR = " DELETE FROM usuarios WHERE cod_usuario = ?";
+	private static final String COMANDO_SQL_INSERT_LOGIN_ALUNO = "INSERT INTO usuarios (login, senha, nivel_usuario) VALUES (?, ?, 'ALUNO')";
+	private static final String COMANDO_SQL_DELETE_LOGIN = " DELETE FROM usuarios WHERE cod_usuario = ?";
 	
 	public Usuarios validaLogin(String loginUsuario, String senhaUsuario) {
 		List<Usuarios> usuarioExistente = jdbcTemplate.query(COMANDO_SQL_VALIDA_LOGIN, new RowMapper<Usuarios>() {
@@ -53,11 +55,21 @@ public class UsuariosDao {
 		usuarioProfessor.setCodigo(idLoginProfessorGerada);
 	}
 	
-	public void deletaLoginProfessor(int idUsuario) {
-		jdbcTemplate.update(COMANDO_SQL_DELETE_LOGIN_PROFESSOR,
-				idUsuario);
+	public void inserirLoginAluno(Alunos usuarioAluno) {
+		jdbcTemplate.update(
+				COMANDO_SQL_INSERT_LOGIN_ALUNO,
+				usuarioAluno.getLoginUsuario(),
+				usuarioAluno.getSenhaUsuario()
+				);
 		
-		
+		Integer idLoginAlunoGerada = jdbcTemplate.queryForObject(
+				"SELECT LAST_INSERT_ID()", Integer.class);
+		usuarioAluno.setCodigo(idLoginAlunoGerada);
+	}
+	
+	public void deletaLogin(int idUsuario) {
+		jdbcTemplate.update(COMANDO_SQL_DELETE_LOGIN,
+				idUsuario);	
 	}
 	
 	

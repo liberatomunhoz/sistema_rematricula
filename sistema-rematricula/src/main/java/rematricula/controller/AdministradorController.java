@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import rematricula.dao.AlunosDao;
 import rematricula.dao.CidadesDao;
 import rematricula.dao.CursosDao;
 import rematricula.dao.DisciplinasDao;
@@ -20,6 +21,7 @@ import rematricula.dao.ProfessoresTurmasDao;
 import rematricula.dao.TurmasDao;
 import rematricula.dao.TurmasDisciplinasDao;
 import rematricula.dao.UsuariosDao;
+import rematricula.model.Alunos;
 import rematricula.model.Cidades;
 import rematricula.model.Cursos;
 import rematricula.model.Disciplinas;
@@ -55,6 +57,9 @@ public class AdministradorController {
 	
 	@Inject
 	ProfessoresTurmasDao professorTurmaDao;
+	
+	@Inject
+	AlunosDao alunoDao;
 	
     //CRUD CURSO	
 	@RequestMapping(value = "/cadastrar/curso", method = RequestMethod.GET)
@@ -142,15 +147,29 @@ public class AdministradorController {
 	@RequestMapping(value = "/deletar-professor", method = RequestMethod.GET)
 	public String deletarProfessor(Model model, Professores professor) {
 		professorDao.deletaProfessor(professor.getCodigo());
-		usuarioDao.deletaLoginProfessor(professor.getCodigoLoginProfessor());
+		usuarioDao.deletaLogin(professor.getCodigoLoginProfessor());
 		model.addAttribute("professores", professorDao.consultaProfessores());
 		return "listarProfessor";
 	}
 	
 	//CRUD ALUNO
 	@RequestMapping(value = "/cadastrar/aluno", method = RequestMethod.GET)
-	public String cadastroDeAluno() {
+	public String cadastroDeAluno(Model model) {
+		model.addAttribute("estados", estadosDao.consultaEstados());
 		return "cadastroAluno";
+	}
+	
+	@RequestMapping(value = "/inserir-aluno", method = RequestMethod.POST)
+	public String inserirAluno(Alunos aluno) {
+		usuarioDao.inserirLoginAluno(aluno);		
+		alunoDao.inserirAluno(aluno);
+		return "redirect:/listar/aluno";
+	}
+	
+	@RequestMapping(value = "/listar/aluno", method = RequestMethod.GET)
+	public String listarAluno(Model model) {
+		model.addAttribute("alunos", alunoDao.consultaAlunos());
+		return "listarAluno";
 	}
 	
 	//CRUD TURMA
