@@ -1,7 +1,7 @@
 {{>cabecalho}}
 {{>menuAdmin}}
 <div class="row paineladm">
-    <div class="small-6 columns small-centered">
+    <div class="small-8 columns small-centered">
         <div class="twelve columns ">
             <table class="twelve data-table">
                 <thead>
@@ -15,10 +15,10 @@
                     <tr>
                         <td>{{nomeCompleto}}</td>
                         <td>
-                            <a href="#" data-reveal-id="detalheModal" class="button radius tiny">
+                            <a href="" onclick="alunoDetalhe({{codigo}})" data-reveal-id="detalheModal" class="button radius tiny">
                                 Detalhes
                             </a>   
-                            <a href="#" data-reveal-id="disciplinaModal" class="button radius tiny">
+                            <a href="" data-reveal-id="disciplinaModal" data-id="{{codigo}}" class="button radius tiny open-AddBookDialog">
                                 Disciplinas   
                             </a>
                             <a href="">
@@ -35,24 +35,7 @@
         <div class="row">
             <div class="large-6 columns">
                 <h2 id="firstModalTitle">Detalhes do Aluno</h2>
-                <label><strong>Nome Completo</strong></label>
-                <p></p>
-                <label><strong>Data de Nascimento</strong></label>
-                <p></p>
-                <label><strong>E-mail</strong></label>
-                <p></p>
-                <label><strong>CPF</strong></label>
-                <p></p>
-                <label><strong>Nome do Pai</strong></label>
-                <p></p>
-                <label><strong>Nome da Mãe</strong></label>
-                <p></p>
-                <label><strong>Cidade</strong></label>
-                <p></p>
-                <label><strong>Matrícula</strong></label>
-                <p></p>
-                <label><strong>Senha</strong></label>
-                <p></p>
+                <div id="alunoDetalhe"></div>
             </div>
             <div class="large-6 columns">
                 <h2 id="firstModalTitle">Disciplinas Iniciais</h2>
@@ -61,16 +44,105 @@
         </div>
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
-    <div id="disciplinaModal" class="reveal-modal" data-reveal aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
-        <h2 id="firstModalTitle">Disciplinas Iniciais</h2>
-        <div class="four columns">
-            <label for="checkbox3">
-                <input type="checkbox" id="checkbox3"> Disciplinas aqui
-            </label>
-            <a href="#" class="button radius tiny">Cadastrar</a>
+    <div id="disciplinaModal" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+        <div class="row">
+            <div class="large-6 columns">
+                <h2>Selecione o Curso</h2>
+                <select name="codCurso" onchange="trocaDisciplina(this.value)" autofocus required>
+                    <option selected disabled>Selecione um Curso</option>
+                    {{#cursos}}
+                        <option value="{{codigo}}">{{nomeCurso}}</option>
+                    {{/cursos}}
+                </select>  
+            </div>
+            <div class="large-6 columns">
+                <h2>Disciplinas Iniciais</h2>
+                    <label>
+                        <ul>
+                            <div id="disciplinaInicial"></div>
+                        </ul>
+                    </label> 
+                    <input type="hidden" id="codigoAluno" value=""/>
+                    <a href="#" class="button radius tiny" id="submit">Cadastrar</a>
+            </div>
         </div>
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
 </div>
+<script>
+$(document).on("click", ".open-AddBookDialog", function () {
+     var Id = $(this).data('id');
+     $("#codigoAluno").val( Id );
+});
+
+function trocaDisciplina(val) {
+    $.ajax({
+        url: '/listar/disciplina-inicial?codigoCurso=' + val,
+        type: 'POST'
+    }).done(function(data) {
+           var template = '<li type="none">'
+                        +   '<input type="checkbox" name="ids[]" value="${codigo}"> ${nomeDisciplina}'
+                        +'</li>';   
+        $('#disciplinaInicial').empty();
+            for(var i = 0; i < data.length; i++) {   
+                var html = template.replace('${codigo}', data[i].codigo)
+                                   .replace('${nomeDisciplina}', data[i].nomeDisciplina);
+            $('#disciplinaInicial').append(html);
+            }
+    });
+}
+
+$('#submit').click(function() {
+    var ids = new Array();
+    $("input:checked").each(function() {
+           ids.push($(this).val());
+    });
+    var codigoAluno = $("#codigoAluno").val();
+
+    $.ajax({
+        url: '/cadastrar/disciplina-inicial?codigoDisciplina=' + ids + '&codigoAluno=' +codigoAluno,
+        type: 'POST'
+    });
+});
+
+function alunoDetalhe(val) {
+    $.ajax({
+        url: '/listar/aluno-detalhe?codigoAluno=' + val,
+        type: 'POST'
+    }).done(function(data) {
+           var template =     '<label><strong>Nome Completo</strong></label>'
+                            + '<p>${nomeCompleto}</p>'
+                            + '<label><strong>Data de Nascimento</strong></label>'
+                            + '<p>${dataNascimento}</p>'
+                            + '<label><strong>E-mail</strong></label>'
+                            + '<p>${email}</p>'
+                            + '<label><strong>CPF</strong></label>'
+                            + '<p>${cpf}</p>'
+                            + '<label><strong>Nome do Pai</strong></label>'
+                            + '<p>${nomePaiAluno}</p>'
+                            + '<label><strong>Nome da Mãe</strong></label>'
+                            + '<p>${nomeMaeAluno}</p>'
+                            + '<label><strong>Cidade</strong></label>'
+                            + '<p>${nomeCidade}</p>'
+                            + '<label><strong>Matrícula</strong></label>'
+                            + '<p>${matriculaAluno}</p>'
+                            + '<label><strong>Senha</strong></label>'
+                            + '<p>${senhaUsuario}</p>';   
+        $('#alunoDetalhe').empty();
+            for(var i = 0; i < data.length; i++) {   
+                var html = template.replace('${nomeCompleto}', data[i].nomeCompleto)
+                                   .replace('${dataNascimento}', data[i].dataNascimento)
+                                   .replace('${email}', data[i].email)
+                                   .replace('${cpf}', data[i].cpf)
+                                   .replace('${nomePaiAluno}', data[i].nomePaiAluno)
+                                   .replace('${nomeMaeAluno}', data[i].nomeMaeAluno)
+                                   .replace('${nomeCidade}', data[i].nomeCidade)
+                                   .replace('${matriculaAluno}', data[i].matriculaAluno)
+                                   .replace('${senhaUsuario}', data[i].senhaUsuario);
+            $('#alunoDetalhe').append(html);
+            }
+    });
+}
+</script>
 {{>rodape}}
         

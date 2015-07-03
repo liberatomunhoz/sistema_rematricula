@@ -26,6 +26,11 @@ public class DisciplinasDao {
 			+ " FROM disciplinas AS d"
 			+ " INNER JOIN cursos AS c ON c.cod_curso = d.curso_cod"
 			+ " WHERE c.cod_curso = ?";
+	private static final String COMANDO_SQL_SELECT_DISCIPLINA_INICIAL = "SELECT d.cod_disc, d.nome_disc"
+			+ " FROM disciplinas AS d"
+			+ " INNER JOIN cursos AS c ON c.cod_curso = d.curso_cod"
+			+ " WHERE d.semestre = 1"
+			+ " AND c.cod_curso = ?";
 	private static final String COMANDO_SQL_DELETE_DISCIPLINAS = " DELETE FROM disciplinas WHERE cod_disc = ?";
 	
 	public void inserirDisciplinas(Disciplinas disciplina) {
@@ -57,6 +62,19 @@ public class DisciplinasDao {
 	public List<Disciplinas> consultaPreRequisito(int codigoCurso) {
 		return jdbcTemplate
 				.query(COMANDO_SQL_SELECT_PREREQUISITO,
+						new RowMapper<Disciplinas>() {
+							public Disciplinas mapRow(ResultSet rs, int arg1) throws SQLException {
+								Disciplinas disciplina = new Disciplinas();
+								disciplina.setCodigo(rs.getInt("d.cod_disc"));
+								disciplina.setNomeDisciplina(rs.getString("d.nome_disc"));
+								return disciplina;
+							}
+						}, codigoCurso);
+	}
+	
+	public List<Disciplinas> consultaDisciplinaInicial(int codigoCurso) {
+		return jdbcTemplate
+				.query(COMANDO_SQL_SELECT_DISCIPLINA_INICIAL,
 						new RowMapper<Disciplinas>() {
 							public Disciplinas mapRow(ResultSet rs, int arg1) throws SQLException {
 								Disciplinas disciplina = new Disciplinas();

@@ -6,6 +6,9 @@ public class Alunos extends DadosUsuarios {
 	private String nomePaiAluno;
 	private String nomeMaeAluno;
 	
+	//FK
+	private int codigoLoginAluno;
+	
 	public int getMatriculaAluno() {
 		return matriculaAluno;
 	}
@@ -28,6 +31,14 @@ public class Alunos extends DadosUsuarios {
 
 	public void setNomeMaeAluno(String nomeMaeAluno) {
 		this.nomeMaeAluno = nomeMaeAluno;
+	}
+
+	public int getCodigoLoginAluno() {
+		return codigoLoginAluno;
+	}
+
+	public void setCodigoLoginAluno(int codigoLoginAluno) {
+		this.codigoLoginAluno = codigoLoginAluno;
 	}
 	
 }

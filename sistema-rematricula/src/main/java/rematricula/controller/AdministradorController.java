@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import rematricula.dao.AlunosDao;
+import rematricula.dao.AlunosDisciplinasDao;
 import rematricula.dao.CidadesDao;
 import rematricula.dao.CursosDao;
 import rematricula.dao.DisciplinasDao;
@@ -22,6 +23,7 @@ import rematricula.dao.TurmasDao;
 import rematricula.dao.TurmasDisciplinasDao;
 import rematricula.dao.UsuariosDao;
 import rematricula.model.Alunos;
+import rematricula.model.AlunosDisciplinas;
 import rematricula.model.Cidades;
 import rematricula.model.Cursos;
 import rematricula.model.Disciplinas;
@@ -60,6 +62,9 @@ public class AdministradorController {
 	
 	@Inject
 	AlunosDao alunoDao;
+	
+	@Inject
+	AlunosDisciplinasDao alunoDisciplinaDao;
 	
     //CRUD CURSO	
 	@RequestMapping(value = "/cadastrar/curso", method = RequestMethod.GET)
@@ -169,7 +174,27 @@ public class AdministradorController {
 	@RequestMapping(value = "/listar/aluno", method = RequestMethod.GET)
 	public String listarAluno(Model model) {
 		model.addAttribute("alunos", alunoDao.consultaAlunos());
+		model.addAttribute("cursos", cursosDao.consultaCursos());
 		return "listarAluno";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/listar/disciplina-inicial", method = RequestMethod.POST)
+	public List<Disciplinas> listarDisciplinaInicial(Model model,  @RequestParam int codigoCurso) {
+		return disciplinaDao.consultaDisciplinaInicial(codigoCurso);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/cadastrar/disciplina-inicial", method = RequestMethod.POST)
+	public String inserirDisciplinaInicial(AlunosDisciplinas alunosDisciplinas, @RequestParam int codigoDisciplina, @RequestParam int codigoAluno) {
+			alunoDisciplinaDao.inserirAlunosDisciplinasInicial(codigoDisciplina, codigoAluno);
+			return "redirect:/listar/aluno";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/listar/aluno-detalhe", method = RequestMethod.POST)
+	public List<Alunos> listarAlunoDetalhe(Model model, @RequestParam int codigoAluno) {
+		return alunoDao.consultaAlunoDetalhe(codigoAluno);
 	}
 	
 	//CRUD TURMA
