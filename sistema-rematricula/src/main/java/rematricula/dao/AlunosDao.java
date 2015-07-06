@@ -25,6 +25,8 @@ public class AlunosDao {
 														  + " INNER JOIN cidades AS c ON c.cod_cidade = a.cidade_cod"
 														  + " INNER JOIN usuarios AS u ON a.cod_usuario = u.cod_usuario"
 														  + " WHERE a.cod_aluno = ?";
+	private static final String COMANDO_SQL_DELETE_ALUNOS = "DELETE FROM alunos WHERE cod_aluno = ?";
+	
 	public void inserirAluno(Alunos aluno) {
 		jdbcTemplate.update(
 				COMANDO_SQL_INSERT_ALUNOS,
@@ -72,5 +74,10 @@ public class AlunosDao {
 								return aluno;
 							}
 						}, codigoAluno);
+	}
+	
+	public void deletaAluno(int aluno) {
+		jdbcTemplate.update(COMANDO_SQL_DELETE_ALUNOS,
+				aluno);
 	}
 }

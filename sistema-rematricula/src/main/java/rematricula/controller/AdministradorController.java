@@ -197,6 +197,15 @@ public class AdministradorController {
 		return alunoDao.consultaAlunoDetalhe(codigoAluno);
 	}
 	
+	@RequestMapping(value = "/deletar-aluno", method = RequestMethod.GET)
+	public String deletarAlunos(Model model, Alunos aluno) {
+		alunoDisciplinaDao.deletaAlunoDisciplina(aluno.getCodigo());
+		alunoDao.deletaAluno(aluno.getCodigo());
+		usuarioDao.deletaLogin(aluno.getCodigoLoginAluno());
+		model.addAttribute("alunos", alunoDao.consultaAlunos());
+		return "listarAluno";
+	}
+	
 	//CRUD TURMA
 	@RequestMapping(value = "/cadastrar/turma", method = RequestMethod.GET)
 	public String cadastroDeTurma(Model model) {

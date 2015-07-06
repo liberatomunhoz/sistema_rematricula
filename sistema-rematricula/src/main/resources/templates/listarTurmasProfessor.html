@@ -1,0 +1,37 @@
+{{>cabecalho}}
+{{>menuProfessor}}
+<div class="row paineladm">
+    <div class="small-10 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Professor</th>
+                        <th>Número da Turma</th>
+                        <th>Nome da Disciplina</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#turmaEDisciplina}}
+                    <tr>
+                        <td class="text-center">{{nomeCompleto}}</td>
+                        <td class="text-center">{{numeroTurma}}</td>
+                        <td class="text-center">{{nomeDisciplina}}</td>
+                        <td>
+                            <a href="/listar/turma-alunos?codigoProfessor={{codigoProfessor}}&codigoDisciplina={{codigoDisciplina}}&numeroTurma={{numeroTurma}}" class="button radius tiny">
+                                Cadastrar Notas
+                            </a>
+                            <a href="/listar/nota-aluno?codigoDisciplina={{codigoDisciplina}}&codigoProfessor={{codigoProfessor}}&numeroTurma={{numeroTurma}}" class="button radius tiny">
+                                Ver Alunos
+                            </a>
+                        </td>
+                    </tr>
+                    {{/turmaEDisciplina}}
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{>rodape}}
+        

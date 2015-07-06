@@ -1,0 +1,41 @@
+		<div class="row header">
+			<div class="eight columns">
+				<a href="">
+					<img class="img-logo" src="../img/logo.png" alt="Logo Liberato">
+				</a>
+			</div>
+			<div class="four columns">
+				<p class="text-right">Logado como <strong>{{#loginUsuario}}{{loginUsuario}}{{/loginUsuario}}</strong></p>
+				<p class="text-right">
+					<a href="" class="button radius tiny">
+						Alterar senha
+					</a>
+					<a href="/logout" class="button radius tiny alert">
+						Sair
+					</a>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<nav class="top-bar" data-topbar role="navigation">
+				<ul class="title-area">
+				    <li class="name">
+				    	<h1><a href="#"></a></h1>
+				    </li>
+				    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+				</ul>
+				<section class="top-bar-section">
+					<ul class="left">
+				    	<li>
+				        	<a href="/aluno/apresentacao">Apresentação</a>
+				      	</li>
+				      	<li>
+				        	<a href="/aluno/grade-curricular?codigoUsuarioAluno={{#loginUsuario}}{{codigo}}{{/loginUsuario}}">Grade Curricular</a>
+				      	</li>
+				      	<li>
+				        	<a href="/aluno/rematricula?codigoUsuarioAluno={{#codigoESemestre}}{{codigo}}{{/codigoESemestre}}&semestre={{#codigoESemestre}}{{semestre}}{{/codigoESemestre}}">Rematrícula</a>
+				      	</li>
+				    </ul>
+				</section>
+			</nav>
+		</div>

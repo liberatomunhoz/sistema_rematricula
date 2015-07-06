@@ -1,0 +1,26 @@
+{{>cabecalho}}
+{{>menuProfessor}}
+<div class="row paineladm">
+    <div class="small-5 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Aluno</th>
+                        <th class="text-center">Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#alunos}}
+                        <tr>
+                            <td class="text-center">{{nomeCompleto}}</td>
+                            <td class="text-center">{{notaAluno}}</td>
+                        </tr>
+                    {{/alunos}}
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{>rodape}}
+        

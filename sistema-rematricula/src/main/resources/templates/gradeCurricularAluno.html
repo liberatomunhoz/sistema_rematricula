@@ -1,0 +1,34 @@
+{{>cabecalho}}
+{{>menuAluno}}
+<div class="row paineladm">
+    <div class="small-10 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Nome do Aluno</th>
+                        <th class="text-center">Semestre</th>
+                        <th class="text-center">Número Turma</th>
+                        <th class="text-center">Nome Disciplina</th>
+                        <th class="text-center">Nota</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#alunos}}
+                        <tr>
+                            <td class="text-center">{{nomeCompleto}}</td>
+                            <td class="text-center">{{semestre}}º</td>
+                            <td class="text-center">{{numeroTurma}}</td>
+                            <td class="text-center">{{nomeDisciplina}}</td>
+                            <td class="text-center">{{notaAluno}}</td>
+                            <td class="text-center">{{status}}</td>
+                        </tr>
+                    {{/alunos}}
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{>rodape}}
+        

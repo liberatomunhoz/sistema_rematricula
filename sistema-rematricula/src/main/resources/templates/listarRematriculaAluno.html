@@ -1,0 +1,59 @@
+{{>cabecalho}}
+{{>menuAluno}}
+<div class="row paineladm">
+    <div class="small-6 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Semestre</th>
+                        <th class="text-center">Disciplina(s) Liberada(s)</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#rematricula}}
+                    <tr>
+                        <td class="text-center">{{semestre}}º</td>
+                        <td class="text-center">{{nomeDisciplina}}</td>
+                        <td>
+                            <a href="/aluno/cadastrar-rematricula?codigoUsuarioAluno={{#loginUsuario}}{{codigo}}{{/loginUsuario}}&codigoDisciplina={{codigoDisciplina}}" class="button radius tiny">
+                                Matricular 
+                            </a>
+                        </td>
+                    </tr>
+                    {{/rematricula}}
+               </tbody>
+           </table>
+
+            <h3>Diciplina(s) Reprovada(s)</h3>
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Semestre</th>
+                        <th class="text-center">Disciplina(s) Liberada(s)</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#disciplinaReprovada}}
+                    <tr>
+                        <td class="text-center">{{semestre}}º</td>
+                        <td class="text-center">{{nomeDisciplina}}</td>
+                        <td>
+                           <a href="/aluno/cadastrar-rematricula?codigoUsuarioAluno={{#loginUsuario}}{{codigo}}{{/loginUsuario}}&codigoDisciplina={{codigoDisciplina}}" class="button radius tiny">
+                                Matricular Novamente
+                            </a>
+                        </td>
+                    </tr>
+                    {{/disciplinaReprovada}}
+                    <a href="/aluno/cadastrar-rematricula?codigoUsuarioAluno={{#loginUsuario}}{{codigo}}{{/loginUsuario}}" class="button radius tiny">
+                                Matricular Novamente
+                            </a>
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{>rodape}}
+        

@@ -21,7 +21,7 @@
                             <a href="" data-reveal-id="disciplinaModal" data-id="{{codigo}}" class="button radius tiny open-AddBookDialog">
                                 Disciplinas   
                             </a>
-                            <a href="" class="button radius tiny alert">
+                            <a href="/deletar-aluno?codigo={{codigo}}&codigoLoginAluno={{codigoLoginAluno}}" class="button radius tiny alert">
                                 Deletar
                             </a>
                         </td>
@@ -112,12 +112,8 @@ function alunoDetalhe(val) {
     }).done(function(data) {
            var template =     '<label><strong>Nome Completo</strong></label>'
                             + '<p>${nomeCompleto}</p>'
-                            + '<label><strong>Data de Nascimento</strong></label>'
-                            + '<p>${dataNascimento}</p>'
                             + '<label><strong>E-mail</strong></label>'
                             + '<p>${email}</p>'
-                            + '<label><strong>CPF</strong></label>'
-                            + '<p>${cpf}</p>'
                             + '<label><strong>Nome do Pai</strong></label>'
                             + '<p>${nomePaiAluno}</p>'
                             + '<label><strong>Nome da Mãe</strong></label>'
@@ -131,9 +127,7 @@ function alunoDetalhe(val) {
         $('#alunoDetalhe').empty();
             for(var i = 0; i < data.length; i++) {   
                 var html = template.replace('${nomeCompleto}', data[i].nomeCompleto)
-                                   .replace('${dataNascimento}', data[i].dataNascimento)
                                    .replace('${email}', data[i].email)
-                                   .replace('${cpf}', data[i].cpf)
                                    .replace('${nomePaiAluno}', data[i].nomePaiAluno)
                                    .replace('${nomeMaeAluno}', data[i].nomeMaeAluno)
                                    .replace('${nomeCidade}', data[i].nomeCidade)

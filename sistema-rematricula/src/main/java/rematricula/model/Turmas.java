@@ -10,6 +10,7 @@ public class Turmas extends Professores {
 	private int codigoProfessorTurma;
 	private int codigoTurmaDisciplina;
 	private String nomeDisciplina;
+	private String notaAluno;
 
 	public int getNumeroTurma() {
 		return numeroTurma;
@@ -57,6 +58,14 @@ public class Turmas extends Professores {
 
 	public void setNomeDisciplina(String nomeDisciplina) {
 		this.nomeDisciplina = nomeDisciplina;
+	}
+
+	public String getNotaAluno() {
+		return notaAluno;
+	}
+
+	public void setNotaAluno(String notaAluno) {
+		this.notaAluno = notaAluno;
 	}
 	
 }

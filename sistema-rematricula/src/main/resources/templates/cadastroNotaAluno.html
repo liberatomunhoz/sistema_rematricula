@@ -1,0 +1,43 @@
+{{>cabecalho}}
+{{>menuProfessor}}
+<div class="row paineladm">
+    <div class="small-5 columns small-centered">
+        <div class="twelve columns ">
+            <table class="twelve data-table">
+                <thead>
+                    <tr>
+                        <th>Nome do Aluno</th>
+                        <th class="text-center">Dar Nota</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#alunos}}
+                    <form action="/cadastrar/nota-aluno" method="post">
+                        <tr>
+                            <td class="text-center">{{nomeCompleto}}</td>
+                            <td>
+                                <input type="hidden" name="codigo" value="{{codigo}}"/>
+                                <input type="hidden" name="codigoDisciplina" value="{{codigoDisciplina}}"/>
+                                <select name="notaAluno" required>
+                                    <option value="AP">AP</option>
+                                    <option value="A">A</option>
+                                    <option value="R">R</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" name="logar" value="Cadastrar Nota" class="button radius tiny" />
+                                <!-- <a type="submit" class="button radius tiny">
+                                    Cadastrar Nota
+                                </a> -->
+                            </td>
+                        </tr>
+                    </form>
+                    {{/alunos}}
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{>rodape}}
+        

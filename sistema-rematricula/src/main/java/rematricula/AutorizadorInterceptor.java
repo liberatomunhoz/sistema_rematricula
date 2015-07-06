@@ -12,14 +12,12 @@
 //
 //		String uri = request.getRequestURI();
 //		if (uri.endsWith("/")||
-//			uri.endsWith("cadastrarCurso")||
-//			uri.endsWith("validaLogin")||
-//			uri.endsWith("script")||
+//			uri.endsWith("loginValida")||
 //			uri.contains("resources")) {
 //			return true;
 //		}
 //
-//		if (request.getSession().getAttribute("usuarioLogado") != null) {
+//		if (request.getSession().getAttribute("usuario logado") != null) {
 //			return true;
 //		}
 //		
