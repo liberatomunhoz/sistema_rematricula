@@ -3,6 +3,7 @@ package rematricula.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,7 @@ import rematricula.model.Cursos;
 import rematricula.model.Disciplinas;
 import rematricula.model.Professores;
 import rematricula.model.Turmas;
+import rematricula.model.Usuarios;
 
 @Controller
 public class AdministradorController {
@@ -70,6 +72,19 @@ public class AdministradorController {
 	@RequestMapping(value = "/administrador-index", method = RequestMethod.GET)
 	public String index() {
 		return "index";
+	}
+	
+	//ALTERAR SENHA
+	@RequestMapping(value = "/alterar-senha", method = RequestMethod.GET)
+	public String telaAlterarSenha(HttpSession session, Model model) {
+		model.addAttribute("loginUsuario", session.getAttribute("usuario logado"));
+		return "alterarSenha";
+	}
+	
+	@RequestMapping(value = "/alterar-senha/cadastro", method = RequestMethod.POST)
+	public String alterarSenha(Usuarios usuario) {
+		usuarioDao.alterarSenha(usuario.getSenhaUsuario(), usuario.getCodigo());
+		return "notaCadastradaSucesso";
 	}
 	
     //CRUD CURSO	

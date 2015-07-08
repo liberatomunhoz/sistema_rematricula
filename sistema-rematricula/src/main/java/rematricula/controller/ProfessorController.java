@@ -12,8 +12,8 @@ import rematricula.dao.AlunosDisciplinasDao;
 import rematricula.dao.TurmasDao;
 import rematricula.dao.UsuariosDao;
 import rematricula.model.AlunosDisciplinas;
+import rematricula.model.Professores;
 import rematricula.model.Turmas;
-import rematricula.model.Usuarios;
 
 @Controller
 public class ProfessorController {
@@ -28,10 +28,10 @@ public class ProfessorController {
 	AlunosDisciplinasDao alunoDisciplinaDao;
 
 	@RequestMapping(value = "/listar/professor-turma", method = RequestMethod.GET)
-	public String listarProfessorTurma(HttpSession session, Model model, int codigoUsuarioProfessor) {
+	public String listarProfessorTurma(HttpSession session, Model model) {
 		model.addAttribute("loginUsuario", session.getAttribute("usuario logado"));
-		Usuarios codigoProfessorRecebido = usuarioDao.pegaCodigoProfessor(codigoUsuarioProfessor);
-		model.addAttribute("turmaEDisciplina", turmaDao.consultaTurmaEDisciplinaPeloCodigoProfessor(codigoProfessorRecebido.getCodigo()));
+		Professores professorRecebido = (Professores) session.getAttribute("usuario logado");
+		model.addAttribute("turmaEDisciplina", turmaDao.consultaTurmaEDisciplinaPeloCodigoProfessor(professorRecebido.getCodigoLoginProfessor()));
 		return "listarTurmasProfessor";
 	}
 	
@@ -48,7 +48,7 @@ public class ProfessorController {
 	public String cadastrarNotaAluno(HttpSession session, Model model, AlunosDisciplinas aluno) {
 		model.addAttribute("loginUsuario", session.getAttribute("usuario logado"));
 		alunoDisciplinaDao.inserirNotaAluno(aluno.getNotaAluno(), aluno.getCodigoDisciplina(), aluno.getCodigo());
-		return "redirect:/listar/turma-alunos";
+		return "notaCadastradaSucesso";
 	}
 	
 	@RequestMapping(value = "/listar/nota-aluno", method = RequestMethod.GET)

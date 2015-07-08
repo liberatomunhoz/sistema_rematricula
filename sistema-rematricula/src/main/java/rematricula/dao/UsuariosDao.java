@@ -31,10 +31,11 @@ public class UsuariosDao {
 																	  + " INNER JOIN disciplinas AS d ON ad.disciplina_cod = d.cod_disc"
 																	  + " WHERE a.cod_usuario = ?"
 																	  + " LIMIT 1";
-	private static final String COMANDO_SQL_SELECT_DADOS_SESSAO_PROFESSOR = "SELECT p.cod_professor, p.nome_completo"
+	private static final String COMANDO_SQL_SELECT_DADOS_SESSAO_PROFESSOR = "SELECT u.cod_usuario, p.cod_professor, p.nome_completo"
 																		  + " FROM usuarios AS u"
 																          + " INNER JOIN professores AS p ON p.cod_usuario = u.cod_usuario"
 																          + " WHERE u.cod_usuario = ?";
+	private static final String COMANDO_SQL_UPDATE_SENHA_USUARIO = "UPDATE usuarios SET senha = ? WHERE cod_usuario = ?";
 	
 	public Usuarios validaLogin(String loginUsuario, String senhaUsuario) {
 		List<Usuarios> usuarioExistente = jdbcTemplate.query(COMANDO_SQL_VALIDA_LOGIN, new RowMapper<Usuarios>() {
@@ -87,7 +88,8 @@ public class UsuariosDao {
 							public Professores mapRow(ResultSet rs, int arg1) throws SQLException {
 								Professores professor = new Professores();
 								
-								professor.setCodigo(rs.getInt("p.cod_professor"));
+								professor.setCodigo(rs.getInt("u.cod_usuario"));
+								professor.setCodigoLoginProfessor(rs.getInt("p.cod_professor"));
 								professor.setNomeCompleto(rs.getString("p.nome_completo"));
 								return professor;
 							}
@@ -111,5 +113,10 @@ public class UsuariosDao {
 						}, codigoLogin);
 		
 		return usuarioExistente.isEmpty() ? null : usuarioExistente.get(0);
+	}
+
+	public void alterarSenha(String senha, int codigo) {
+		jdbcTemplate.update(COMANDO_SQL_UPDATE_SENHA_USUARIO,
+				senha, codigo);		
 	}
 }

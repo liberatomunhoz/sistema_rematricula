@@ -47,7 +47,7 @@ public class LoginController {
 				Professores sessaoProfessor = usuarioDao.pegaDadosSessaoProfessor(usuarioExiste.getCodigo());
 				session.setAttribute("usuario logado", sessaoProfessor);
 				Professores professorRecebido = (Professores) session.getAttribute("usuario logado");
-				model.addAttribute("turmaEDisciplina", turmaDao.consultaTurmaEDisciplinaPeloCodigoProfessor(professorRecebido.getCodigo()));
+				model.addAttribute("turmaEDisciplina", turmaDao.consultaTurmaEDisciplinaPeloCodigoProfessor(professorRecebido.getCodigoLoginProfessor()));
 				model.addAttribute("loginUsuario", session.getAttribute("usuario logado"));
 				return "listarTurmasProfessor";
 			} else {
