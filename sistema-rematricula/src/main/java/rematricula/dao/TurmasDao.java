@@ -46,7 +46,8 @@ public class TurmasDao {
 																						   + " INNER JOIN professores_turmas AS pt ON pt.turma_cod = t.cod_turma"
 																						   + " WHERE pt.professor_cod = ?"
 																						   + " AND d.cod_disc = ?"
-																						   + " AND t.numero_turma = ?";
+																						   + " AND t.numero_turma = ?"
+																						   + " AND ('Concluído' LIKE CONCAT('%', ad.status, '%') OR ('Reprovado' LIKE CONCAT('%', ad.status, '%')) OR ('Matriculado' LIKE CONCAT('%', ad.status, '%')))";
 	private static final String COMANDO_SQL_SELECT_ALUNO_NOTA = "SELECT a.nome_completo, ad.nota"
  														      + " FROM alunos AS a"
 														      + " INNER JOIN alunos_disciplinas AS ad ON a.cod_aluno = ad.aluno_cod"
@@ -56,7 +57,8 @@ public class TurmasDao {
 														      + " INNER JOIN professores_turmas AS pt ON pt.turma_cod = t.cod_turma"
 														      + " WHERE pt.professor_cod = ?"
 														      + " AND d.cod_disc = ?"
-														      + " AND t.numero_turma = ?";
+														      + " AND t.numero_turma = ?"
+														      + " AND ('Concluído' LIKE CONCAT('%', ad.status, '%') OR ('Reprovado' LIKE CONCAT('%', ad.status, '%')) OR ('Matriculado' LIKE CONCAT('%', ad.status, '%')))";
 	
 	public void inserirTurmas(Turmas turma) {
 		jdbcTemplate.update(
