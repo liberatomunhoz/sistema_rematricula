@@ -116,6 +116,12 @@ public class AdministradorController {
 		return disciplinaDao.consultaPreRequisito(codigoCurso);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/listar/pre-requisito-disciplina", method = RequestMethod.POST)
+	public List<Disciplinas> listarPreRequisitoDisciplina(Model model,  @RequestParam int preRequisito) {
+		return disciplinaDao.consultaPreRequisitoDisciplina(preRequisito);
+	}
+	
 	@RequestMapping(value = "/deletar-disciplina", method = RequestMethod.GET)
 	public String deletarDisciplina(Model model, Disciplinas disciplina) {
 		disciplinaDao.deletaDisciplina(disciplina.getCodigo());

@@ -34,6 +34,10 @@ public class DisciplinasDao {
 			+ " WHERE d.semestre = 1"
 			+ " AND c.cod_curso = ?";
 	private static final String COMANDO_SQL_DELETE_DISCIPLINAS = " DELETE FROM disciplinas WHERE cod_disc = ?";
+	private static final String COMANDO_SQL_SELECT_PREREQUISITO_DISCIPLINA = "SELECT d.nome_disc"
+			+ " FROM disciplinas AS d"
+			+ " WHERE d.cod_disc = ?";
+	
 	
 	public void inserirDisciplinas(Disciplinas disciplina) {
 		jdbcTemplate.update(
@@ -72,6 +76,18 @@ public class DisciplinasDao {
 								return disciplina;
 							}
 						}, codigoCurso);
+	}
+	
+	public List<Disciplinas> consultaPreRequisitoDisciplina(int codigoPreRequisito) {
+		return jdbcTemplate
+				.query(COMANDO_SQL_SELECT_PREREQUISITO_DISCIPLINA,
+						new RowMapper<Disciplinas>() {
+							public Disciplinas mapRow(ResultSet rs, int arg1) throws SQLException {
+								Disciplinas disciplina = new Disciplinas();
+								disciplina.setNomeDisciplina(rs.getString("d.nome_disc"));
+								return disciplina;
+							}
+						}, codigoPreRequisito);
 	}
 	
 	public List<Disciplinas> consultaDisciplinaInicial(int codigoCurso) {

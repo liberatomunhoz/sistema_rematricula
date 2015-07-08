@@ -1,25 +1,30 @@
 {{>cabecalho}}
 {{>menuAdmin}}
 <div class="row paineladm">
-    <div class="small-8 columns small-centered">
-        <div class="twelve columns ">
+    <div class="small-10 columns small-centered">
+        <div class="twelve columns">
             <table class="twelve data-table">
                 <thead>
                     <tr>
-                        <th>Nome do Curso</th>
-                        <th>Nome da Disciplina</th>
+                        <th class="text-center">Nome do Curso</th>
+                        <th class="text-center">Nome da Disciplina</th>
                         <th class="text-center">Semestre</th>
-                        <th>Pré-Requisito</th>
+                        <th class="text-center">Pré-Requisito</th>
                         <th class="text-center">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{#disciplinas}}
                     <tr>
-                        <td>{{nomeCurso}}</td>
-                        <td>{{nomeDisciplina}}</td>
-                        <td>{{semestre}}°</td>
-                        <td>{{preRequisito}}</td>
+                        <td class="text-center">{{nomeCurso}}</td>
+                        <td class="text-center">{{nomeDisciplina}}</td>
+                        <td class="text-center">{{semestre}}°</td>
+                        <td class="text-center">
+                            <a data-reveal-id="visualizaPreRequisito" onclick="preRequisito({{preRequisito}})" data-id="{{preRequisito}}
+                            " class="button radius tiny">
+                                Visualizar   
+                            </a>
+                        </td>
                         <td class="text-center">
                             <a href="/deletar-disciplina?codigo={{codigo}}"  class="button radius tiny alert">
                                 Deletar
@@ -30,7 +35,31 @@
                </tbody>
             </table>
         </div>
+        <div id="visualizaPreRequisito" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+            <div class="row">
+                <div class="large-6 columns">
+                    <h4>Pré-Requisitos</h4>
+                    <div id="preRequisito"></div>
+                </div>
+            </div>
+            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
     </div>
 </div>
+<script>
+    function preRequisito(val) {
+    $.ajax({
+        url: '/listar/pre-requisito-disciplina?preRequisito=' + val,
+        type: 'POST'
+    }).done(function(data) {
+           var template = '<p><strong>${nomeDisciplina}</strong></p>';   
+        $('#preRequisito').empty();
+            for(var i = 0; i < data.length; i++) {   
+                var html = template.replace('${nomeDisciplina}', data[i].nomeDisciplina);
+            $('#preRequisito').append(html);
+            }
+    });
+}
+</script>
 {{>rodape}}
         
