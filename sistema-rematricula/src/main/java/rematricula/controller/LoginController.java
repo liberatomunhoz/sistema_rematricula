@@ -41,10 +41,7 @@ public class LoginController {
 			if (usuarioExiste.getNivelUsuario() == NivelUsuario.ADMINISTRADOR){
 				session.setAttribute("usuario logado", usuarioExiste);
 				model.addAttribute("loginUsuario", session.getAttribute("usuario logado"));
-				model.addAttribute("menuAdmin", true);
-				model.addAttribute("menuProfessor", false);
-				model.addAttribute("menuAluno", false);
-				return "index";
+				return "redirect:/administrador-index";
 			}
 			else if (usuarioExiste.getNivelUsuario() == NivelUsuario.PROFESSOR) {
 				Professores sessaoProfessor = usuarioDao.pegaDadosSessaoProfessor(usuarioExiste.getCodigo());

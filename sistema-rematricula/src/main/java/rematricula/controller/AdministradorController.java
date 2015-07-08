@@ -66,6 +66,12 @@ public class AdministradorController {
 	@Inject
 	AlunosDisciplinasDao alunoDisciplinaDao;
 	
+	//INDEX
+	@RequestMapping(value = "/administrador-index", method = RequestMethod.GET)
+	public String index() {
+		return "index";
+	}
+	
     //CRUD CURSO	
 	@RequestMapping(value = "/cadastrar/curso", method = RequestMethod.GET)
 	public String cadastroDeCurso() {
