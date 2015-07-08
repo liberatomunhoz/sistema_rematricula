@@ -9,6 +9,12 @@
 		<div class="row paineladm">
 			<div class="row">
 				<div class="small-5 columns small-centered">
+					{{#mensagem}}
+					<div data-alert class="alert-box alert radius">
+						Usuário ou senha inválidos!
+					  	<a href="/" class="close">&times;</a>
+					</div>
+					{{/mensagem}}
 					<form action="/loginValida" method="post" class="custom loginform">
 						<fieldset>
 							<legend>Identifique-se</legend>

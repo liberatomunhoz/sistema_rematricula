@@ -30,7 +30,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String telaLogin(Model model) {
-			model.addAttribute("mensagem", "");
+			model.addAttribute("mensagem", false);
 			return "telaLogin";
 	}
 
@@ -59,7 +59,7 @@ public class LoginController {
 				return "apresentacaoAluno";
 			}
 		} else {
-			model.addAttribute("mensagem", "Usuário ou senha inválida");
+			model.addAttribute("mensagem", true);
 			return "telaLogin";
 		}		
 	}
