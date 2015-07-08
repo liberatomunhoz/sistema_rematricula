@@ -40,8 +40,7 @@ public class AlunosDisciplinasDao {
                                                                                + " WHERE d.disc_pre IN (SELECT ad.disciplina_cod"
 				                                                               + " FROM alunos_disciplinas AS ad"
 				                                                               + " INNER JOIN disciplinas AS d ON d.cod_disc = ad.disciplina_cod"
-				                                                               + " WHERE d.semestre = ?"
-				                                                               + " AND ad.aluno_cod = ?"
+				                                                               + " WHERE ad.aluno_cod = ?"
 				                                                               + " AND ('Concluído' LIKE CONCAT('%', ad.status, '%')))";
 	
 	private static final String COMANDO_SQL_SELECT_DISCIPLINA_PARA_REMATRICULA_CASO_REPROVE = "SELECT d.semestre, d.cod_disc, d.nome_disc" 
@@ -49,12 +48,12 @@ public class AlunosDisciplinasDao {
 			   																				+ " WHERE d.cod_disc IN (SELECT ad.disciplina_cod"
 			   																				+ " FROM alunos_disciplinas AS ad"
 																				            + " INNER JOIN disciplinas AS d ON d.cod_disc = ad.disciplina_cod"
-																				            + " WHERE d.semestre = ?"
-																				            + " AND ad.aluno_cod = ?"
+																				            + " WHERE ad.aluno_cod = ?"
 																				            + " AND ('Reprovado' LIKE CONCAT('%', ad.status, '%')))";
 	
 	private static final String COMANDO_SQL_DELETE_ALUNOS_DISCIPLINAS = "DELETE FROM alunos_disciplinas WHERE aluno_cod = ?";
-	
+	private static final String COMANDO_SQL_UPDATE_STATUS_MATRICULA = "UPDATE alunos_disciplinas SET status = 'Finalizado' WHERE status = 'Concluído' AND aluno_cod = ?";
+	private static final String COMANDO_SQL_UPDATE_MATRICULA_REPROVADA = "UPDATE alunos_disciplinas SET nota='', status = 'Matriculado' WHERE status = 'Reprovado' AND aluno_cod = ?";
 	
 	public void inserirAlunosDisciplinasInicial(int codigoDisciplina, int codigoAluno) {
 		jdbcTemplate.update(
@@ -106,7 +105,7 @@ public class AlunosDisciplinasDao {
 						}, codigoAluno);
 	}
 	
-	public List<AlunosDisciplinas> consultaDisciplinaRematricula(int codigoAluno, int semestre){			
+	public List<AlunosDisciplinas> consultaDisciplinaRematricula(int codigoAluno){			
 		return jdbcTemplate
 				.query(COMANDO_SQL_SELECT_DISCIPLINA_PARA_REMATRICULA,
 						new RowMapper<AlunosDisciplinas>() {
@@ -117,10 +116,10 @@ public class AlunosDisciplinasDao {
 								aluno.setSemestre(rs.getInt("d.semestre"));
 								return aluno;
 							}
-						}, semestre, codigoAluno);
+						}, codigoAluno);
 	}
 	
-	public List<AlunosDisciplinas> consultaDisciplinaReprovadaRematricula(int codigoAluno, int semestre){			
+	public List<AlunosDisciplinas> consultaDisciplinaReprovadaRematricula(int codigoAluno){			
 		return jdbcTemplate
 				.query(COMANDO_SQL_SELECT_DISCIPLINA_PARA_REMATRICULA_CASO_REPROVE,
 						new RowMapper<AlunosDisciplinas>() {
@@ -131,11 +130,21 @@ public class AlunosDisciplinasDao {
 								aluno.setSemestre(rs.getInt("d.semestre"));
 								return aluno;
 							}
-						}, semestre, codigoAluno);
+						}, codigoAluno);
 	}
 
 	public void deletaAlunoDisciplina(int codigo) {
 		jdbcTemplate.update(COMANDO_SQL_DELETE_ALUNOS_DISCIPLINAS,
 				codigo);		
+	}
+
+	public void trocaStatusMatricula(int codigoAluno) {
+		jdbcTemplate.update(COMANDO_SQL_UPDATE_STATUS_MATRICULA,
+				 codigoAluno);		
+	}
+	
+	public void trocaStatusDisciplinaReprovada(int codigoAluno) {
+		jdbcTemplate.update(COMANDO_SQL_UPDATE_MATRICULA_REPROVADA,
+				 codigoAluno);		
 	}
 }
