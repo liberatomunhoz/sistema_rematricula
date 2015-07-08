@@ -19,7 +19,7 @@
                                 Detalhes
                             </a>   
                             <a href="" data-reveal-id="disciplinaModal" data-id="{{codigo}}" class="button radius tiny open-AddBookDialog">
-                                Disciplinas   
+                                Cadastrar Disciplina(s)   
                             </a>
                             <a href="/deletar-aluno?codigo={{codigo}}&codigoLoginAluno={{codigoLoginAluno}}" class="button radius tiny alert">
                                 Deletar
@@ -102,6 +102,8 @@ $('#submit').click(function() {
     $.ajax({
         url: '/cadastrar/disciplina-inicial?codigoDisciplina=' + ids + '&codigoAluno=' +codigoAluno,
         type: 'POST'
+    }).done(function(data){
+        alert("Disciplina cadastrada!");
     });
 });
 

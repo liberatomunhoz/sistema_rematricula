@@ -25,8 +25,23 @@
                     {{/rematricula}}
                </tbody>
            </table>
-
-            <h3>Diciplina(s) Reprovada(s)</h3>
+       </div>
+   </div>
+   <div class="row">
+        <div class="large-4 columns">
+            <p></p>
+        </div>
+        <div class="large-4 columns">
+            <h5>Diciplina(s) Reprovada(s)</h5>
+        </div>
+        <div class="large-4 columns">
+            <a data-reveal-id="finalizarRematricula" class="button radius tiny alert">
+                Finalizar Rematrícula   
+            </a>
+        </div>
+    </div>
+    <div class="small-6 columns small-centered">
+        <div class="twelve columns ">
             <table class="twelve data-table">
                 <thead>
                     <tr>
@@ -41,19 +56,31 @@
                         <td class="text-center">{{semestre}}º</td>
                         <td class="text-center">{{nomeDisciplina}}</td>
                         <td>
-                           <a href="/aluno/cadastrar-rematricula?codigoUsuarioAluno={{#loginUsuario}}{{codigo}}{{/loginUsuario}}&codigoDisciplina={{codigoDisciplina}}" class="button radius tiny">
+                           <a href="/aluno/cadastrar-rematricula-reprovada?codigoDisciplina={{codigoDisciplina}}" class="button radius tiny">
                                 Matricular Novamente
                             </a>
                         </td>
                     </tr>
                     {{/disciplinaReprovada}}
-                    <a href="/aluno/cadastrar-rematricula?codigoUsuarioAluno={{#loginUsuario}}{{codigo}}{{/loginUsuario}}" class="button radius tiny">
-                                Matricular Novamente
-                            </a>
                </tbody>
             </table>
         </div>
     </div>
+    <div id="finalizarRematricula" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+        <div class="row">
+            <div class="large-6 columns">
+                <h4>Deseja relamente finalizar sua Rematrícula</h4>
+            <a href="/aluno/troca-status" class="button radius tiny">Sim</a>
+            <a class="button radius tiny alert custom-close-reveal-modal">Não</a>
+            </div>
+        </div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
 </div>
+<script>
+    $('a.custom-close-reveal-modal').click(function(){
+      $('#finalizarRematricula').foundation('reveal', 'close');
+    });
+</script>
 {{>rodape}}
         
