@@ -25,15 +25,16 @@ public class UsuariosDao {
 	private static final String COMANDO_SQL_INSERT_LOGIN_PROFESSOR = "INSERT INTO usuarios (login, senha, nivel_usuario) VALUES (?, ?, 'PROFESSOR')";
 	private static final String COMANDO_SQL_INSERT_LOGIN_ALUNO = "INSERT INTO usuarios (login, senha, nivel_usuario) VALUES (?, ?, 'ALUNO')";
 	private static final String COMANDO_SQL_DELETE_LOGIN = " DELETE FROM usuarios WHERE cod_usuario = ?";
-	private static final String COMANDO_SQL_SELECT_CODIGO_PROFESSOR = "SELECT p.cod_professor"
-																	+ " FROM usuarios AS u"
-																    + " INNER JOIN professores AS p ON p.cod_usuario = u.cod_usuario"
-																    + " WHERE u.cod_usuario = ?";
-	private static final String COMANDO_SQL_SELECT_CODIGO_ALUNO = "SELECT a.cod_aluno"
-																+ " FROM usuarios AS u"
-															    + " INNER JOIN alunos AS a ON a.cod_usuario = u.cod_usuario"
-															    + " WHERE u.cod_usuario = ?";
-	
+	private static final String COMANDO_SQL_SELECT_DADOS_SESSAO_ALUNO = "SELECT a.cod_aluno, a.nome_completo, a.cod_usuario, d.semestre"
+ 																	  + " FROM alunos AS a"
+																	  + " INNER JOIN alunos_disciplinas AS ad ON ad.aluno_cod = a.cod_aluno"
+																	  + " INNER JOIN disciplinas AS d ON ad.disciplina_cod = d.cod_disc"
+																	  + " WHERE a.cod_usuario = ?"
+																	  + " LIMIT 1";
+	private static final String COMANDO_SQL_SELECT_DADOS_SESSAO_PROFESSOR = "SELECT p.cod_professor, p.nome_completo"
+																		  + " FROM usuarios AS u"
+																          + " INNER JOIN professores AS p ON p.cod_usuario = u.cod_usuario"
+																          + " WHERE u.cod_usuario = ?";
 	
 	public Usuarios validaLogin(String loginUsuario, String senhaUsuario) {
 		List<Usuarios> usuarioExistente = jdbcTemplate.query(COMANDO_SQL_VALIDA_LOGIN, new RowMapper<Usuarios>() {
@@ -80,31 +81,35 @@ public class UsuariosDao {
 				idUsuario);	
 	}
 	
-	public Usuarios pegaCodigoProfessor(int codigoLogin) {
-		List<Usuarios> codigoProfesssor =  jdbcTemplate.query(COMANDO_SQL_SELECT_CODIGO_PROFESSOR, new RowMapper<Usuarios>() {
+	public Professores pegaDadosSessaoProfessor(int codigoLogin) {
+		List<Professores> usuarioExistente =  jdbcTemplate.query(COMANDO_SQL_SELECT_DADOS_SESSAO_PROFESSOR, new RowMapper<Professores>() {
 							@Override
-							public Usuarios mapRow(ResultSet rs, int arg1) throws SQLException {
-								Usuarios usuario = new Usuarios();
+							public Professores mapRow(ResultSet rs, int arg1) throws SQLException {
+								Professores professor = new Professores();
 								
-								usuario.setCodigo(rs.getInt("p.cod_professor"));
-								return usuario;
+								professor.setCodigo(rs.getInt("p.cod_professor"));
+								professor.setNomeCompleto(rs.getString("p.nome_completo"));
+								return professor;
 							}
 						}, codigoLogin);
 		
-		return codigoProfesssor.isEmpty() ? null : codigoProfesssor.get(0);
+		return usuarioExistente.isEmpty() ? null : usuarioExistente.get(0);
 	}
 	
-	public Usuarios pegaCodigoAluno(int codigoLogin) {
-		List<Usuarios> codigoAluno =  jdbcTemplate.query(COMANDO_SQL_SELECT_CODIGO_ALUNO, new RowMapper<Usuarios>() {
+	public Alunos pegaDadosSessaoAluno(int codigoLogin) {
+		List<Alunos> usuarioExistente = jdbcTemplate.query(COMANDO_SQL_SELECT_DADOS_SESSAO_ALUNO, new RowMapper<Alunos>() {
 							@Override
-							public Usuarios mapRow(ResultSet rs, int arg1) throws SQLException {
-								Usuarios usuario = new Usuarios();
+							public Alunos mapRow(ResultSet rs, int arg1) throws SQLException {
+								Alunos aluno = new Alunos();
 								
-								usuario.setCodigo(rs.getInt("a.cod_aluno"));
-								return usuario;
+								aluno.setCodigo(rs.getInt("a.cod_usuario"));
+								aluno.setCodigoLoginAluno(rs.getInt("a.cod_aluno"));
+								aluno.setNomeCompleto(rs.getString("a.nome_completo"));
+								aluno.setSemestreAluno(rs.getInt("d.semestre")); 
+								return aluno;
 							}
 						}, codigoLogin);
 		
-		return codigoAluno.isEmpty() ? null : codigoAluno.get(0);
+		return usuarioExistente.isEmpty() ? null : usuarioExistente.get(0);
 	}
 }

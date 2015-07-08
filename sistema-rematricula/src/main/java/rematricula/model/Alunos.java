@@ -8,6 +8,7 @@ public class Alunos extends DadosUsuarios {
 	
 	//FK
 	private int codigoLoginAluno;
+	private int semestreAluno;
 	
 	public int getMatriculaAluno() {
 		return matriculaAluno;
@@ -39,6 +40,14 @@ public class Alunos extends DadosUsuarios {
 
 	public void setCodigoLoginAluno(int codigoLoginAluno) {
 		this.codigoLoginAluno = codigoLoginAluno;
+	}
+
+	public int getSemestreAluno() {
+		return semestreAluno;
+	}
+
+	public void setSemestreAluno(int semestreAluno) {
+		this.semestreAluno = semestreAluno;
 	}
 	
 }

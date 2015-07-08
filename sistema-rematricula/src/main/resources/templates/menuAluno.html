@@ -5,7 +5,7 @@
 				</a>
 			</div>
 			<div class="four columns">
-				<p class="text-right">Logado como <strong>{{#loginUsuario}}{{loginUsuario}}{{/loginUsuario}}</strong></p>
+				<p class="text-right">Logado como <strong>{{#loginUsuario}}{{nomeCompleto}}{{/loginUsuario}}</strong></p>
 				<p class="text-right">
 					<a href="" class="button radius tiny">
 						Alterar senha
@@ -30,10 +30,10 @@
 				        	<a href="/aluno/apresentacao">Apresentação</a>
 				      	</li>
 				      	<li>
-				        	<a href="/aluno/grade-curricular?codigoUsuarioAluno={{#loginUsuario}}{{codigo}}{{/loginUsuario}}">Grade Curricular</a>
+				        	<a href="/aluno/grade-curricular?codigoAluno={{#loginUsuario}}{{codigoLoginAluno}}{{/loginUsuario}}">Grade Curricular</a>
 				      	</li>
 				      	<li>
-				        	<a href="/aluno/rematricula?codigoUsuarioAluno={{#codigoESemestre}}{{codigo}}{{/codigoESemestre}}&semestre={{#codigoESemestre}}{{semestre}}{{/codigoESemestre}}">Rematrícula</a>
+				        	<a href="/aluno/rematricula?codigoAluno={{#loginUsuario}}{{codigoLoginAluno}}&semestre={{semestreAluno}}{{/loginUsuario}}">Rematrícula</a>
 				      	</li>
 				    </ul>
 				</section>

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import rematricula.dao.AlunosDisciplinasDao;
 import rematricula.dao.TurmasDao;
 import rematricula.dao.UsuariosDao;
+import rematricula.model.Alunos;
 import rematricula.model.NivelUsuario;
+import rematricula.model.Professores;
 import rematricula.model.Usuarios;
 
 @Controller
@@ -36,8 +38,8 @@ public class LoginController {
 	public String validar(HttpSession session, Usuarios usuario, Model model) {
 		Usuarios usuarioExiste = usuarioDao.validaLogin(usuario.getLoginUsuario(), usuario.getSenhaUsuario());
 		if (usuarioExiste != null) {
-			session.setAttribute("usuario logado", usuarioExiste);
 			if (usuarioExiste.getNivelUsuario() == NivelUsuario.ADMINISTRADOR){
+				session.setAttribute("usuario logado", usuarioExiste);
 				model.addAttribute("loginUsuario", session.getAttribute("usuario logado"));
 				model.addAttribute("menuAdmin", true);
 				model.addAttribute("menuProfessor", false);
@@ -45,18 +47,18 @@ public class LoginController {
 				return "index";
 			}
 			else if (usuarioExiste.getNivelUsuario() == NivelUsuario.PROFESSOR) {
-				Usuarios codigoProfessorRecebido = usuarioDao.pegaCodigoProfessor(usuarioExiste.getCodigo());
-				model.addAttribute("turmaEDisciplina", turmaDao.consultaTurmaEDisciplinaPeloCodigoProfessor(codigoProfessorRecebido.getCodigo()));
+				Professores sessaoProfessor = usuarioDao.pegaDadosSessaoProfessor(usuarioExiste.getCodigo());
+				session.setAttribute("usuario logado", sessaoProfessor);
+				Professores professorRecebido = (Professores) session.getAttribute("usuario logado");
+				model.addAttribute("turmaEDisciplina", turmaDao.consultaTurmaEDisciplinaPeloCodigoProfessor(professorRecebido.getCodigo()));
 				model.addAttribute("loginUsuario", session.getAttribute("usuario logado"));
 				return "listarTurmasProfessor";
 			} else {
-				Usuarios codigoAlunoRecebido = usuarioDao.pegaCodigoAluno(usuarioExiste.getCodigo());
-				model.addAttribute("alunos", alunoDisciplinaDao.consultaGradeCurricular(codigoAlunoRecebido.getCodigo()));
-				model.addAttribute("codigoESemestre", alunoDisciplinaDao.consultaCodigoSemestreAluno(codigoAlunoRecebido.getCodigo()));
+				Alunos sessaoAluno = usuarioDao.pegaDadosSessaoAluno(usuarioExiste.getCodigo());
+				session.setAttribute("usuario logado", sessaoAluno);
+				Alunos alunoRecebido = (Alunos) session.getAttribute("usuario logado");
+				model.addAttribute("alunos", alunoDisciplinaDao.consultaGradeCurricular(alunoRecebido.getCodigo()));
 				model.addAttribute("loginUsuario", session.getAttribute("usuario logado"));
-				model.addAttribute("menuAdmin", false);
-				model.addAttribute("menuProfessor", false);
-				model.addAttribute("menuAluno", true);
 				return "apresentacaoAluno";
 			}
 		} else {
