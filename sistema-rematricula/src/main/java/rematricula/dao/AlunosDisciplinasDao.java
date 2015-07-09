@@ -28,7 +28,8 @@ public class AlunosDisciplinasDao {
 																	      + " INNER JOIN disciplinas AS d ON d.cod_disc = ad.disciplina_cod"
 																	      + " INNER JOIN turmas_disciplinas AS td ON d.cod_disc = td.disc_cod"
 																	      + " INNER JOIN turmas AS t ON t.cod_turma = td.turma_cod"
-																	      + " WHERE a.cod_aluno = ?";
+																	      + " WHERE a.cod_aluno = ?"
+																	      + " ORDER BY d.semestre";
 	private static final String COMANDO_SQL_SELECT_CODIGO_SEMESTRE_ALUNO = "SELECT a.cod_aluno, d.semestre"
 																		  + " FROM alunos AS a"
 																		  + " INNER JOIN alunos_disciplinas AS ad ON a.cod_aluno = ad.aluno_cod"
@@ -54,6 +55,11 @@ public class AlunosDisciplinasDao {
 	private static final String COMANDO_SQL_DELETE_ALUNOS_DISCIPLINAS = "DELETE FROM alunos_disciplinas WHERE aluno_cod = ?";
 	private static final String COMANDO_SQL_UPDATE_STATUS_MATRICULA = "UPDATE alunos_disciplinas SET status = 'Finalizado' WHERE status = 'Concluído' AND aluno_cod = ?";
 	private static final String COMANDO_SQL_UPDATE_MATRICULA_REPROVADA = "UPDATE alunos_disciplinas SET nota='', status = 'Matriculado' WHERE status = 'Reprovado' AND aluno_cod = ?";
+	private static final String COMANDO_SQL_SELECT_ALUNO_DETALHE_DISCIPLINA = "SELECT d.semestre, d.nome_disc, ad.status"
+																			+ " FROM disciplinas AS d"
+																			+ " INNER JOIN alunos_disciplinas AS ad ON d.cod_disc = ad.disciplina_cod"
+																			+ " WHERE ad.aluno_cod = ?"
+																			+ " ORDER BY d.semestre";
 	
 	public void inserirAlunosDisciplinasInicial(int codigoDisciplina, int codigoAluno) {
 		jdbcTemplate.update(
@@ -146,5 +152,19 @@ public class AlunosDisciplinasDao {
 	public void trocaStatusDisciplinaReprovada(int codigoAluno) {
 		jdbcTemplate.update(COMANDO_SQL_UPDATE_MATRICULA_REPROVADA,
 				 codigoAluno);		
+	}
+	
+	public List<AlunosDisciplinas> consultaAlunoDetalheDisciplina(int codigoAluno) {
+		return jdbcTemplate
+				.query(COMANDO_SQL_SELECT_ALUNO_DETALHE_DISCIPLINA,
+						new RowMapper<AlunosDisciplinas>() {
+							public AlunosDisciplinas mapRow(ResultSet rs, int arg1) throws SQLException {
+								AlunosDisciplinas aluno = new AlunosDisciplinas();
+								aluno.setNomeDisciplina(rs.getString("d.nome_disc"));
+								aluno.setSemestre(rs.getInt("d.semestre"));
+								aluno.setStatus(rs.getString("ad.status"));
+								return aluno;
+							}
+						}, codigoAluno);
 	}
 }

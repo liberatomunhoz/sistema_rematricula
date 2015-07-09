@@ -224,6 +224,12 @@ public class AdministradorController {
 		return alunoDao.consultaAlunoDetalhe(codigoAluno);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/listar/aluno-detalhe-disciplina", method = RequestMethod.POST)
+	public List<AlunosDisciplinas> consultaAlunoDetalheDisciplina(Model model, @RequestParam int codigoAluno) {
+		return alunoDisciplinaDao.consultaAlunoDetalheDisciplina(codigoAluno);
+	}
+	
 	@RequestMapping(value = "/deletar-aluno", method = RequestMethod.GET)
 	public String deletarAlunos(Model model, Alunos aluno) {
 		alunoDisciplinaDao.deletaAlunoDisciplina(aluno.getCodigo());
